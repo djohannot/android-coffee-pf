@@ -2,7 +2,6 @@ package com.ysdc.coffee.ui.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.transition.TransitionManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,16 +17,11 @@ import com.ysdc.coffee.exception.WrongEmailException;
 import com.ysdc.coffee.ui.base.BaseActivity;
 import com.ysdc.coffee.ui.home.HomeActivity;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
@@ -136,7 +130,6 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     }
 
     private void showLogin() {
-        TransitionManager.beginDelayedTransition(mainContainer);
         signInButton.setVisibility(View.VISIBLE);
         signInDesc.setVisibility(View.VISIBLE);
     }
@@ -147,7 +140,6 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     }
 
     private void showError() {
-        TransitionManager.beginDelayedTransition(mainContainer);
         signInDesc.setText(getString(R.string.login_error));
         signInDesc.setTextColor(getResources().getColor(R.color.selection));
     }
