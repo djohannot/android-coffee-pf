@@ -126,6 +126,10 @@ public class Item {
         this.imageUrl = imageUrl;
     }
 
+    public void setSugarQuantity(Integer sugarQuantity) {
+        this.sugarQuantity = sugarQuantity;
+    }
+
     public boolean hasIngredients() {
         return this.ingredients != null && !ingredients.isEmpty();
     }

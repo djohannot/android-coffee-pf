@@ -136,6 +136,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                     .load(image)
                     //.load(TextUtils.isEmpty(product.getImageUrl()) ? R.drawable.ic_profile_placeholder : product.getImageUrl())
                     .apply(new RequestOptions().circleCropTransform())
+                    .fitCenter()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(productImage);

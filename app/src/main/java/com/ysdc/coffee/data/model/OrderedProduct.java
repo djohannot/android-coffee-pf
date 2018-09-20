@@ -98,7 +98,7 @@ public class OrderedProduct{
 
     public String getOrderDetails(Context context) {
         return context.getString(cupSize.getLocalizableKey()) + ", " +
-                sugarQuantity + context.getString(R.string.sugar_stick) + ", " +
+                sugarQuantity + " " + context.getString(R.string.sugar_stick) + ", " +
                 getIngredients().size() + " " + context.getString(R.string.ingredients) + (takeaway ? ", " + context.getString(R.string.take_away) : EMPTY_STRING);
     }
 

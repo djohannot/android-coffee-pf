@@ -18,8 +18,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 public class OrderMapper {
-    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private final SimpleDateFormat simpleDateFormat;
 
     public OrderMapper() {
@@ -35,6 +37,7 @@ public class OrderMapper {
             item.setNote(orderEntry.getNote());
             item.setTakeaway(orderEntry.isTakeaway());
             item.setSize(orderEntry.getCupSize().getValue());
+            item.setSugarQuantity(orderEntry.getSugarQuantity());
 
             for (Ingredient ingredient : orderEntry.getIngredients()) {
                 item.getIngredients().add(new OrderIngredient(ingredient.getId(), 1));
@@ -53,9 +56,9 @@ public class OrderMapper {
             order.setStatus(networkOrder.getOrderStatus());
             order.setUser(new User(networkOrder.getUserName(), networkOrder.getImageUrl()));
             try {
-                order.setDate(simpleDateFormat.parse(networkOrder.getDate()));
+                order.setDate(simpleDateFormat.parse(networkOrder.getDate().split(".")[0]));
             } catch (ParseException e) {
-                e.printStackTrace();
+                Timber.e(e,"oups");
             }
             for (Item item : networkOrder.getItems()) {
                 orders.add(parseItem(item, order));
@@ -72,8 +75,9 @@ public class OrderMapper {
         orderedProduct.setSugarQuantity(item.getSugarQuantity());
         orderedProduct.setTakeaway(item.isTakeaway());
         orderedProduct.setCoffeeName(item.getCoffeeName());
+        orderedProduct.setCoffeeImageUrl(item.getCoffeeImage());
         orderedProduct.setCoffeeId(item.getCoffeeId());
-        orderedProduct.setCoffeeImageUrl(item.getImageUrl());
+        orderedProduct.setCoffeeImageUrl(item.getCoffeeImage());
         orderedProduct.setNote(item.getNote());
         if (item.hasIngredients()) {
             for (OrderIngredient ingredient : item.getIngredients()) {
