@@ -32,16 +32,21 @@ public class SplashPresenter<V extends SplashMvpView> extends BasePresenter<V> i
         return Completable.defer(() -> {
             try {
                 GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-                Timber.d("Google user logged with:\nserver auth code: %s, \nid: %s\nemail: %s\ntoken: %s", account.getServerAuthCode(), account.getId(), account.getEmail(), account.getIdToken());
+                Timber.d("auth code: %s, \nname: %s\nemail: %s\ntoken: %s\n photo url: %s",
+                        account.getServerAuthCode(),
+                        account.getDisplayName(),
+                        account.getEmail(),
+                        account.getIdToken(),
+                        account.getPhotoUrl().toString());
                 if (account.getEmail().endsWith(PROPERTY_FINDER_EMAIL)) {
-                    return userRepository.registerUser(account.getIdToken(), account.getDisplayName(), account.getEmail());
+                    return userRepository.registerUser(account.getIdToken(), account.getDisplayName(), account.getEmail(), account.getPhotoUrl().toString());
                 } else {
                     return Completable.error(new WrongEmailException());
                 }
             } catch (ApiException e) {
                 // The ApiException status code indicates the detailed failure reason.
                 // Please refer to the GoogleSignInStatusCodes class reference for more information.
-                Timber.e(e, "signInResult:failed code=%d", e.getStatusCode());
+                Timber.e(e, "signInResult:failed code=%d\n%s", e.getStatusCode(), e.getLocalizedMessage());
                 userRepository.logout();
                 return Completable.error(new GoogleException());
             }

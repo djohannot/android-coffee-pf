@@ -48,6 +48,8 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
     protected NoSwipePager viewPager;
     @BindView(R.id.fragmentContainer)
     protected FrameLayout fragmentContainer;
+    @BindView(R.id.barLayout)
+    AppBarLayout barLayout;
     @Inject
     HomeMvpPresenter<HomeMvpView> presenter;
     private FragmentAdapter adapter;
@@ -154,8 +156,7 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
     }
 
     public void requireBarElevation(boolean required) {
-        //TODO: Check if we need it
-        //barLayout.setElevation(required ? DEFAULT_ELEVATION : NO_ELEVATION);
+        barLayout.setElevation(required ? DEFAULT_ELEVATION : NO_ELEVATION);
     }
 
     private void initializeView() {
@@ -176,12 +177,12 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
         viewPager.setOffscreenPageLimit(3);
 
         bottomNavigation.setOnTabSelectedListener(this);
-        bottomNavigation.addItem(new AHBottomNavigationItem(R.string.title_bar, R.drawable.ic_logo, R.color.background));
-        bottomNavigation.addItem(new AHBottomNavigationItem(R.string.title_order, R.drawable.ic_coffee, R.color.background));
-        bottomNavigation.addItem(new AHBottomNavigationItem(R.string.title_History, R.drawable.ic_history, R.color.background));
+        bottomNavigation.addItem(new AHBottomNavigationItem(R.string.title_bar, R.drawable.ic_logo, R.color.white));
+        bottomNavigation.addItem(new AHBottomNavigationItem(R.string.title_order, R.drawable.ic_coffee, R.color.white));
+        bottomNavigation.addItem(new AHBottomNavigationItem(R.string.title_History, R.drawable.ic_history, R.color.white));
         bottomNavigation.setBehaviorTranslationEnabled(false);
 
-        bottomNavigation.setColoredModeColors(ContextCompat.getColor(this, R.color.colorPrimaryDark), ContextCompat.getColor(this, R.color.colorPrimary));
+        bottomNavigation.setColoredModeColors(ContextCompat.getColor(this, R.color.colorPrimaryDark), ContextCompat.getColor(this, R.color.dark));
         bottomNavigation.setColored(true);
 
         //  Displays item Title always (for selected and non-selected items)
@@ -192,8 +193,7 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
     }
 
     private void showTopAndBottomBars() {
-        //TODO: Check if we need it
-        //barLayout.setExpanded(true, true);
+        barLayout.setExpanded(true, true);
     }
 
     private void setBottomBarVisible(boolean bottomBarVisible) {

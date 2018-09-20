@@ -5,6 +5,7 @@ apply plugin: 'io.fabric'
 apply from: 'linter.gradle'
 apply from: 'dependencies.gradle'
 apply from: 'jacoco.gradle'
+apply from: 'signing.gradle'
 
 android {
     compileSdkVersion 28
@@ -33,15 +34,17 @@ android {
     buildTypes {
         debug {
             debuggable true
+            signingConfig signingConfigs.debug
             buildConfigField "boolean", "MEMORY_ANALIZE", "false"
-            buildConfigField "String", "BASE_URL", "\"https://coffee.propertyfinder.ae\""
+            buildConfigField "String", "BASE_URL", "\"http://pf-go-coffee.k8s.propertyfinder.net/\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             shrinkResources false
         }
         release {
             minifyEnabled true
+            signingConfig signingConfigs.release
             buildConfigField "boolean", "MEMORY_ANALIZE", "true"
-            buildConfigField "String", "BASE_URL", "\"https://coffee.propertyfinder.ae\""
+            buildConfigField "String", "BASE_URL", "\"http://pf-go-coffee.k8s.propertyfinder.net\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             shrinkResources false
         }

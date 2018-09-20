@@ -1,7 +1,13 @@
 package com.ysdc.coffee.ui.order;
 
 import com.ysdc.coffee.data.ErrorHandler;
+import com.ysdc.coffee.data.model.Product;
+import com.ysdc.coffee.data.repository.ProductRepository;
 import com.ysdc.coffee.ui.base.BasePresenter;
+
+import java.util.List;
+
+import io.reactivex.Single;
 
 /**
  * Created by david on 1/25/18.
@@ -9,9 +15,15 @@ import com.ysdc.coffee.ui.base.BasePresenter;
 
 public class OrderPresenter<V extends OrderMvpView> extends BasePresenter<V> implements OrderMvpPresenter<V> {
 
+    private final ProductRepository productRepository;
 
-    public OrderPresenter(ErrorHandler errorHandler) {
+    public OrderPresenter(ErrorHandler errorHandler, ProductRepository productRepository) {
         super(errorHandler);
+        this.productRepository = productRepository;
     }
 
+    @Override
+    public Single<List<Product>> getProducts() {
+        return productRepository.getProduct();
+    }
 }

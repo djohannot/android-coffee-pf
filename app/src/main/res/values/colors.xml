@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FFEAD0</color>
-    <color name="colorPrimaryDark">#884e00</color>
+    <color name="colorPrimaryDark">#b98068</color>
     <color name="colorAccent">#F1CFA5</color>
 
-    <color name="background">#F1CFA5</color>
+    <color name="background">#f8e8d4</color>
     <color name="selection">#E20031</color>
 
     <color name="transparent">@android:color/transparent</color>
     <color name="white">#FFFFFF</color>
+    <color name="dark">#333333</color>
 </resources>

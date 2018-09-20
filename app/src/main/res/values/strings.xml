@@ -32,8 +32,8 @@
     <string name="topping_hazelnut">Hazelnut</string>
     <string name="costumize_others">Others</string>
     <string name="take_away">Take Away</string>
-    <string name="login_desc">Please signin using your Property Finder account.</string>
-    <string name="login_error">Error, please use your Property Finder account. If problem persist contact us.</string>
+    <string name="login_desc">Please, signin using your Property Finder account</string>
+    <string name="login_error">Error, please use your Property Finder account. If problem persist contact us</string>
     <string name="customize_note_title">Note</string>
     <string name="title_bar">Home</string>
     <string name="title_History">History</string>

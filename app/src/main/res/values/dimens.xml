@@ -25,7 +25,7 @@
     <dimen name="splash_title_font_size">25sp</dimen>
     <dimen name="splash_title_top_margin">36dp</dimen>
     <dimen name="google_margin_vertical">32dp</dimen>
-    <dimen name="splash_desc_font_size">16sp</dimen>
+    <dimen name="splash_desc_font_size">14sp</dimen>
 
     <!--home screen-->
     <dimen name="home_font_desc">22sp</dimen>
@@ -42,7 +42,7 @@
     <dimen name="product_cell_desc_font">12sp</dimen>
     <dimen name="product_cell_text_margin_left">10dp</dimen>
     <dimen name="product_image_size">50dp</dimen>
-    <dimen name="product_image_left_margin">10dp</dimen>
+    <dimen name="product_image_left_margin">20dp</dimen>
     <dimen name="product_cell_height">70dp</dimen>
 
     <!--Customize view-->
@@ -55,10 +55,12 @@
     <dimen name="customize_size_img_bottom_margin">9dp</dimen>
     <dimen name="customize_size_font_size">12sp</dimen>
     <dimen name="checkbox_text_space">10dp</dimen>
-    <dimen name="splash_google_top_margin">16dp</dimen>
+    <dimen name="splash_google_top_margin">52dp</dimen>
     <dimen name="splash_error_margin">10dp</dimen>
     <dimen name="customize_note_font">14sp</dimen>
     <dimen name="customize_note_layout_height">65dp</dimen>
     <dimen name="customize_note_layout_margin_top">5dp</dimen>
+    <dimen name="splash_desc_top_margin">16dp</dimen>
+    <dimen name="cell_height">86dp</dimen>
 
 </resources>

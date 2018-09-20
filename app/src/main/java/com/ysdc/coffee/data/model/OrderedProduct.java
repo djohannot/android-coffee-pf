@@ -4,16 +4,16 @@ import java.util.List;
 
 public class OrderedProduct {
     private final Product product;
-    private final List<Topping> toppings;
+    private final List<Ingredient> ingredients;
     private final CupSize cupSize;
     private final int quantity;
     private final String note;
     private final boolean takeaway;
     private final Integer sugarQuantity;
 
-    public OrderedProduct(Product product, List<Topping> toppings, CupSize cupSize, int quantity, String note, boolean takeaway, Integer sugarQuantity) {
+    public OrderedProduct(Product product, List<Ingredient> ingredients, CupSize cupSize, int quantity, String note, boolean takeaway, Integer sugarQuantity) {
         this.product = product;
-        this.toppings = toppings;
+        this.ingredients = ingredients;
         this.cupSize = cupSize;
         this.quantity = quantity;
         this.note = note;
@@ -25,8 +25,8 @@ public class OrderedProduct {
         return product;
     }
 
-    public List<Topping> getToppings() {
-        return toppings;
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 
     public CupSize getCupSize() {
@@ -53,7 +53,7 @@ public class OrderedProduct {
     public static class Builder {
 
         private Product product;
-        private List<Topping> toppings;
+        private List<Ingredient> ingredients;
         private CupSize cupSize;
         private int quantity;
         private String note;
@@ -65,8 +65,8 @@ public class OrderedProduct {
             return this;
         }
 
-        public Builder withToppings(List<Topping> toppings) {
-            this.toppings = toppings;
+        public Builder withToppings(List<Ingredient> ingredients) {
+            this.ingredients = ingredients;
             return this;
         }
 
@@ -96,7 +96,7 @@ public class OrderedProduct {
         }
 
         public OrderedProduct build() {
-            return new OrderedProduct(product, toppings, cupSize, quantity, note, takeaway, sugarQuantity);
+            return new OrderedProduct(product, ingredients, cupSize, quantity, note, takeaway, sugarQuantity);
         }
     }
 }

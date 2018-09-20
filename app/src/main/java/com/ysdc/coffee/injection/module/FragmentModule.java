@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import com.ysdc.coffee.data.ErrorHandler;
+import com.ysdc.coffee.data.repository.ProductRepository;
 import com.ysdc.coffee.injection.annotations.ActivityScope;
 import com.ysdc.coffee.injection.annotations.FragmentScope;
 import com.ysdc.coffee.ui.bar.BarMvpPresenter;
@@ -52,8 +53,8 @@ public class FragmentModule {
 
     @Provides
     @FragmentScope
-    OrderMvpPresenter<OrderMvpView> provideOrderPresenter(ErrorHandler errorHandler) {
-        return new OrderPresenter<>(errorHandler);
+    OrderMvpPresenter<OrderMvpView> provideOrderPresenter(ErrorHandler errorHandler, ProductRepository productRepository) {
+        return new OrderPresenter<>(errorHandler, productRepository);
     }
 
     @Provides

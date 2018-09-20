@@ -31,8 +31,8 @@ public class NetworkModule {
     @Provides
     @Singleton
     DefaultNetworkServiceCreator provideDefaultNetworkServiceCreator(Gson gson, NetworkConfig networkConfig, GeneralConfig generalConfig, Application
-            application, NetworkUtils networkUtils) {
-        return new DefaultNetworkServiceCreator(gson, networkConfig, generalConfig, application, networkUtils);
+            application, NetworkUtils networkUtils, MyPreferences preferences) {
+        return new DefaultNetworkServiceCreator(gson, networkConfig, generalConfig, application, networkUtils, preferences);
     }
 
 }

@@ -8,6 +8,7 @@ import com.ysdc.coffee.app.GeneralConfig;
 import com.ysdc.coffee.data.network.config.NetworkConfig;
 import com.ysdc.coffee.data.network.config.interceptor.AuthorizationInterceptor;
 import com.ysdc.coffee.data.network.config.interceptor.ConnectivityInterceptor;
+import com.ysdc.coffee.data.prefs.MyPreferences;
 import com.ysdc.coffee.utils.NetworkUtils;
 
 import java.net.CookieManager;
@@ -37,12 +38,15 @@ public abstract class NetworkServiceCreator {
     private final GeneralConfig generalConfig;
     private final OkHttpClient.Builder httpClient;
     private final NetworkUtils networkUtils;
+    private final MyPreferences preferences;
 
-    public NetworkServiceCreator(Gson gson, NetworkConfig networkConfig, GeneralConfig generalConfig, Application application, NetworkUtils networkUtils) {
+    public NetworkServiceCreator(Gson gson, NetworkConfig networkConfig, GeneralConfig generalConfig, Application application, NetworkUtils networkUtils,
+                                 MyPreferences preferences) {
         this.gson = gson;
         this.networkConfig = networkConfig;
         this.generalConfig = generalConfig;
         this.networkUtils = networkUtils;
+        this.preferences = preferences;
 
         this.httpClient = new OkHttpClient.Builder();
         this.httpClient.connectTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS);
@@ -60,7 +64,7 @@ public abstract class NetworkServiceCreator {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
         }
         this.httpClient.addInterceptor(httpLoggingInterceptor);
-        this.httpClient.addInterceptor(new AuthorizationInterceptor());
+        this.httpClient.addInterceptor(new AuthorizationInterceptor(preferences));
         this.httpClient.addInterceptor(new ConnectivityInterceptor(application.getApplicationContext(), networkUtils));
     }
 

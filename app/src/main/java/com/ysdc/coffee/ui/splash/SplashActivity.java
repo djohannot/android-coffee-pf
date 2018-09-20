@@ -2,9 +2,9 @@ package com.ysdc.coffee.ui.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.transition.TransitionManager;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -16,11 +16,18 @@ import com.google.android.gms.tasks.Task;
 import com.ysdc.coffee.R;
 import com.ysdc.coffee.exception.WrongEmailException;
 import com.ysdc.coffee.ui.base.BaseActivity;
+import com.ysdc.coffee.ui.home.HomeActivity;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
@@ -34,13 +41,11 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     @Inject
     SplashMvpPresenter<SplashMvpView> presenter;
     @BindView(R.id.main_container)
-    protected ConstraintLayout mainContainer;
+    protected LinearLayout mainContainer;
     @BindView(R.id.sign_in_google)
     protected SignInButton signInButton;
     @BindView(R.id.sign_in_desc)
     protected TextView signInDesc;
-    @BindView(R.id.sign_in_error)
-    protected TextView errorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +106,18 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         }
     }
 
+    @OnClick(R.id.sign_in_google)
+    public void googleSignInClicked() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
+    }
+
     private void setUp() {
+//        subscriptions.add(Single.timer(1000, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(value -> {
+//                }));
+
         if (presenter.isUserLoggedIn()) {
             showNextActivity();
         } else {
@@ -115,7 +131,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     }
 
     private void showNextActivity() {
-        //startActivity(HomeActivity.getInstance(this));
+        startActivity(HomeActivity.getInstance(this));
         finish();
     }
 
@@ -132,11 +148,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
 
     private void showError() {
         TransitionManager.beginDelayedTransition(mainContainer);
-        errorView.setVisibility(View.VISIBLE);
-    }
-
-    private void hideError() {
-        TransitionManager.beginDelayedTransition(mainContainer);
-        errorView.setVisibility(View.GONE);
+        signInDesc.setText(getString(R.string.login_error));
+        signInDesc.setTextColor(getResources().getColor(R.color.selection));
     }
 }

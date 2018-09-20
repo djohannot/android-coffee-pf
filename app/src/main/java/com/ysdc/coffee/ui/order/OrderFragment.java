@@ -114,6 +114,7 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
             getBaseActivity().supportInvalidateOptionsMenu();
         }
     }
+
     private void showProducts(List<Product> properties) {
         if (adapter == null) {
             adapter = new ProductAdapter(properties, this::showCustomizeProduct, getActivity());
