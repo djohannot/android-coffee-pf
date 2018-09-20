@@ -12,5 +12,6 @@
     <color name="dark">#333333</color>
     <color name="quantityCellColor">#f8e8d4</color>
     <color name="quantityTextColor">#b98068</color>
-
+    <color name="lineColor">#e6e1de</color>
+    <color name="topBarColor">#9c6c4e</color>
 </resources>

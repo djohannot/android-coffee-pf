@@ -44,7 +44,7 @@ android {
             minifyEnabled true
             signingConfig signingConfigs.release
             buildConfigField "boolean", "MEMORY_ANALIZE", "true"
-            buildConfigField "String", "BASE_URL", "\"http://pf-go-coffee.k8s.propertyfinder.net\""
+            buildConfigField "String", "BASE_URL", "\"http://pf-go-coffee.k8s.propertyfinder.net/\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             shrinkResources false
         }

@@ -25,6 +25,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.ysdc.coffee.utils.AppConstants.EMPTY_STRING;
+
 public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDisplayer {
 
     private Integer menuId;
@@ -81,7 +83,7 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
                     swipeRefreshLayout.setRefreshing(false);
                 })
                 .subscribe(products -> {
-                    if (products.isEmpty()) {
+                    if (!products.isEmpty()) {
                         showProducts(products);
                     }
                 }, throwable -> onError(throwable))
@@ -95,7 +97,7 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
 
     @Override
     public String getCustomTitle() {
-        return getString(R.string.title_order);
+        return EMPTY_STRING;
     }
 
     @Override

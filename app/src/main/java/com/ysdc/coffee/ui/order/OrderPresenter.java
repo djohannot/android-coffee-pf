@@ -26,7 +26,7 @@ public class OrderPresenter<V extends OrderMvpView> extends BasePresenter<V> imp
 
     @Override
     public Single<List<Product>> getProducts() {
-        return productRepository.getProduct();
+        return productRepository.getProducts();
     }
 
     @Override

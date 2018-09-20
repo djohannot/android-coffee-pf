@@ -25,7 +25,7 @@ public class ProductRepository {
         this.networkServiceCreator = networkServiceCreator;
     }
 
-    public Single<List<Product>> getProduct() {
+    public Single<List<Product>> getProducts() {
         return networkServiceCreator.getCoffeeService().getCoffees()
                 .subscribeOn(Schedulers.io())
                 .map(productResponses -> {

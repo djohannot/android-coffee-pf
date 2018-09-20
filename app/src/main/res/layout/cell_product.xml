@@ -84,4 +84,11 @@
             android:visibility="gone"
             tools:text="Have a nice and strong coffeed asd asdsa dasd asd asd ad asd asd asd asd asd asd asd da sd asdas" />
     </LinearLayout>
+    <View
+        android:id="@+id/line_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor"
+        android:layout_alignParentBottom="true"
+        />
 </RelativeLayout>
