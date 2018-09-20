@@ -115,12 +115,12 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
         }
     }
 
-    private void showProducts(List<Product> properties) {
+    private void showProducts(List<Product> products) {
         if (adapter == null) {
-            adapter = new ProductAdapter(properties, this::showCustomizeProduct, getActivity());
+            adapter = new ProductAdapter(products, presenter.getOrderedProducts(), this::showCustomizeProduct, getActivity());
             productList.setAdapter(adapter);
         } else {
-            adapter.updateProperties(properties);
+            adapter.updateProducts(products);
         }
         adapter.notifyDataSetChanged();
     }

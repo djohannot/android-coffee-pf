@@ -10,4 +10,7 @@
     <color name="transparent">@android:color/transparent</color>
     <color name="white">#FFFFFF</color>
     <color name="dark">#333333</color>
+    <color name="quantityCellColor">#f8e8d4</color>
+    <color name="quantityTextColor">#b98068</color>
+
 </resources>

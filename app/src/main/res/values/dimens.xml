@@ -38,7 +38,7 @@
     <dimen name="home_image_height">190dp</dimen>
     <dimen name="call_leads_cell_space_vertical">4dp</dimen>
     <dimen name="call_leads_cell_space_horizontal">8dp</dimen>
-    <dimen name="product_cell_title_font">16sp</dimen>
+    <dimen name="product_cell_title_font">18sp</dimen>
     <dimen name="product_cell_desc_font">12sp</dimen>
     <dimen name="product_cell_text_margin_left">10dp</dimen>
     <dimen name="product_image_size">50dp</dimen>
@@ -62,5 +62,7 @@
     <dimen name="customize_note_layout_margin_top">5dp</dimen>
     <dimen name="splash_desc_top_margin">16dp</dimen>
     <dimen name="cell_height">86dp</dimen>
+    <dimen name="chevron_right_margin">13dp</dimen>
+    <dimen name="cell_right_space_width">80dp</dimen>
 
 </resources>

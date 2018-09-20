@@ -1,6 +1,7 @@
 package com.ysdc.coffee.ui.order;
 
 import com.ysdc.coffee.data.model.Order;
+import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.ui.base.MvpPresenter;
 
@@ -15,4 +16,6 @@ import io.reactivex.Single;
 public interface OrderMvpPresenter<V extends OrderMvpView> extends MvpPresenter<V> {
 
     Single<List<Product>> getProducts();
+
+    List<OrderedProduct> getOrderedProducts();
 }

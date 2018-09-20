@@ -1,79 +1,87 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cell_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/background"
+    android:layout_height="@dimen/cell_height"
+    android:background="@color/white"
     android:clipToPadding="false">
 
-    <RelativeLayout
-        android:id="@+id/cell_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/product_cell_height"
-        android:layout_marginBottom="@dimen/call_leads_cell_space_vertical"
-        android:layout_marginLeft="@dimen/call_leads_cell_space_horizontal"
-        android:layout_marginRight="@dimen/call_leads_cell_space_horizontal"
-        android:layout_marginTop="@dimen/call_leads_cell_space_vertical"
-        android:background="@color/colorPrimary"
-        android:visibility="visible">
+
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="@dimen/product_image_size"
+        android:layout_height="@dimen/product_image_size"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/product_image_left_margin" />
+
+    <LinearLayout
+        android:id="@+id/right_layout"
+        android:layout_width="@dimen/cell_right_space_width"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical|right"
+        android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/product_image"
-            android:layout_width="@dimen/product_image_size"
-            android:layout_height="@dimen/product_image_size"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/product_image_left_margin"
-            android:src="@drawable/cup_tea" />
+            android:id="@+id/chevron"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/chevron_right_margin"
+            android:src="@drawable/chevron_right"
+            android:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/quantity_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_width="47dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="@dimen/chevron_right_margin"
+            android:background="@drawable/shape_round_corner_quantity"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/empty"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/quantity_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/style_tiny_padding"
-                android:layout_marginRight="@dimen/style_tiny_padding"
-                android:fontFamily="@font/caviar_dreams_bold"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/product_cell_title_font"
-                tools:text="2x" />
+                android:textColor="@color/quantityTextColor"
+                tools:text="2" />
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignBottom="@+id/product_image"
+        android:layout_alignTop="@id/product_image"
+        android:layout_marginLeft="@dimen/product_cell_text_margin_left"
+        android:layout_toLeftOf="@+id/right_layout"
+        android:layout_toRightOf="@id/product_image"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/product_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/general_margin_vertical"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/dark"
+            android:textSize="@dimen/product_cell_title_font"
+            tools:text="Expresso" />
+
+        <TextView
+            android:id="@+id/product_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/product_image"
-            android:layout_marginLeft="@dimen/product_cell_text_margin_left"
-            android:layout_toLeftOf="@+id/quantity_layout"
-            android:layout_toRightOf="@id/product_image"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/product_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/caviar_dreams_bold"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/product_cell_title_font"
-                tools:text="Expresso" />
-
-            <TextView
-                android:id="@+id/product_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/caviar_dreams"
-                android:maxLines="2"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/product_cell_desc_font"
-                tools:text="Have a nice and strong coffee" />
-        </LinearLayout>
-    </RelativeLayout>
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:maxLines="2"
+            android:textColor="@color/dark"
+            android:textSize="@dimen/product_cell_desc_font"
+            android:visibility="gone"
+            tools:text="Have a nice and strong coffeed asd asdsa dasd asd asd ad asd asd asd asd asd asd asd da sd asdas" />
+    </LinearLayout>
 </RelativeLayout>
