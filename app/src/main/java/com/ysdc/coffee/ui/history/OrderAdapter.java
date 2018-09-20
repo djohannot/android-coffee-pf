@@ -62,11 +62,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderedProduct orderedProduct = orders.get(position);
 
-        if (!TextUtils.isEmpty(orderedProduct.getProduct().getImageUrl())) {
-            holder.updatePicture(orderedProduct.getProduct().getImageUrl());
+        if (!TextUtils.isEmpty(orderedProduct.getCoffeeImageUrl())) {
+            holder.updatePicture(orderedProduct.getCoffeeImageUrl());
         }
 
-        holder.productName.setText(orderedProduct.getProduct().getName());
+        holder.productName.setText(orderedProduct.getCoffeeName());
         holder.quantityField.setText(String.valueOf(orderedProduct.getQuantity()));
         holder.orderDetails.setText(orderedProduct.getOrderDetails(context));
         switch (orderedProduct.getOrder().getStatus()) {

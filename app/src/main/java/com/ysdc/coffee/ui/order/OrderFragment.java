@@ -165,7 +165,11 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
             send_Layout.setVisibility(View.VISIBLE);
             headerEmpty.setVisibility(View.GONE);
             headerFilled.setVisibility(View.VISIBLE);
-            quantityField.setText(String.valueOf(presenter.getOrderEntries().size()));
+            int quantity = 0;
+            for(OrderEntry entry : presenter.getOrderEntries()){
+                quantity += entry.getQuantity();
+            }
+            quantityField.setText(String.valueOf(quantity));
         }
     }
 
@@ -196,13 +200,11 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
     public void clearOrder(){
         new AlertDialog.Builder(getActivity())
                 .setMessage(getResources().getString(R.string.clean_order))
-                .setPositiveButton(getActivity().getResources().getString(R.string.action_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        presenter.cleanCurrentOrder();
-                        adapter.updateProductsQuantities(presenter.getOrderEntries());
-                        adapter.notifyDataSetChanged();
-                    }
+                .setPositiveButton(getActivity().getResources().getString(R.string.action_ok), (dialogInterface, i) -> {
+                    presenter.cleanCurrentOrder();
+                    adapter.updateProductsQuantities(presenter.getOrderEntries());
+                    adapter.notifyDataSetChanged();
+                    refreshSendLayout();
                 })
                 .setCancelable(true)
                 .create()

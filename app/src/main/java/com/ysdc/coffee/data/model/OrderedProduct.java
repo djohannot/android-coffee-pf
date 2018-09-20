@@ -12,7 +12,6 @@ import java.util.List;
 import static com.ysdc.coffee.utils.AppConstants.EMPTY_STRING;
 
 public class OrderedProduct{
-    private final Product product;
     private final Order order;
     private List<Ingredient> ingredients;
     private CupSize cupSize;
@@ -20,9 +19,11 @@ public class OrderedProduct{
     private String note;
     private boolean takeaway;
     private Integer sugarQuantity;
+    private String coffeeName;
+    private String coffeeId;
+    private String coffeeImageUrl;
 
-    public OrderedProduct(Product product, Order order){
-        this.product = product;
+    public OrderedProduct(Order order){
         this.order = order;
         quantity = 1;
         cupSize = CupSize.MEDIUM;
@@ -30,8 +31,17 @@ public class OrderedProduct{
         sugarQuantity = 0;
         ingredients = new ArrayList<>();
     }
-    public Product getProduct() {
-        return product;
+
+    public String getCoffeeName() {
+        return coffeeName;
+    }
+
+    public String getCoffeeId() {
+        return coffeeId;
+    }
+
+    public String getCoffeeImageUrl() {
+        return coffeeImageUrl;
     }
 
     public Order getOrder() {
@@ -89,6 +99,18 @@ public class OrderedProduct{
     public String getOrderDetails(Context context) {
         return context.getString(cupSize.getLocalizableKey()) + ", " +
                 sugarQuantity + context.getString(R.string.sugar_stick) + ", " +
-                getIngredients().size()  + context.getString(R.string.ingredients) + (takeaway ? ", " + context.getString(R.string.take_away) : EMPTY_STRING);
+                getIngredients().size() + " " + context.getString(R.string.ingredients) + (takeaway ? ", " + context.getString(R.string.take_away) : EMPTY_STRING);
+    }
+
+    public void setCoffeeName(String coffeeName) {
+        this.coffeeName = coffeeName;
+    }
+
+    public void setCoffeeId(String coffeeId) {
+        this.coffeeId = coffeeId;
+    }
+
+    public void setCoffeeImageUrl(String coffeeImageUrl) {
+        this.coffeeImageUrl = coffeeImageUrl;
     }
 }

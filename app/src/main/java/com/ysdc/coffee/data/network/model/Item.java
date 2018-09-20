@@ -26,6 +26,8 @@ public class Item {
     private String imageUrl;
     @SerializedName("ingredients")
     private List<OrderIngredient> ingredients;
+    @SerializedName("coffee")
+    private Coffee coffee;
 
     public Item() {
         this.ingredients = new ArrayList<>();
@@ -33,6 +35,27 @@ public class Item {
 
     public String getId() {
         return id;
+    }
+
+    class Coffee {
+        @SerializedName("id")
+        private String id;
+        @SerializedName("name")
+        private String name;
+        @SerializedName("image")
+        private String imageUrl;
+    }
+
+    public String getCoffeeId(){
+        return coffee.id;
+    }
+
+    public String getCoffeeName(){
+        return coffee.name;
+    }
+
+    public String getCoffeeImage(){
+        return coffee.imageUrl;
     }
 
     public String getName() {
@@ -101,5 +124,9 @@ public class Item {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean hasIngredients() {
+        return this.ingredients != null && !ingredients.isEmpty();
     }
 }

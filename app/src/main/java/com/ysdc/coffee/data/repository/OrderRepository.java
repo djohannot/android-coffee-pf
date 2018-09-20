@@ -37,7 +37,7 @@ public class OrderRepository {
 
     public Completable sendOrder() {
         return Completable.defer(() -> {
-            OrderMapper mapper = new OrderMapper(productRepository);
+            OrderMapper mapper = new OrderMapper();
 
             return networkServiceCreator.getCoffeeService().placeOrder(mapper.convertOrder(currentOrder))
                     .doOnSuccess(networkOrder -> {
@@ -47,14 +47,14 @@ public class OrderRepository {
     }
 
     public void cleanCurrentOrder() {
-        currentOrder = null;
+        currentOrder = new Order();
     }
 
     public Single<List<OrderedProduct>> getUserOrders() {
         return networkServiceCreator.getCoffeeService().getOrders()
                 .subscribeOn(Schedulers.io())
                 .map(networkOrders -> {
-                    OrderMapper mapper = new OrderMapper(productRepository);
+                    OrderMapper mapper = new OrderMapper();
                     return mapper.parseNetworkOrders(networkOrders);
                 });
     }

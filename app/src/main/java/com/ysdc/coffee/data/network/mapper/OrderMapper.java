@@ -21,11 +21,9 @@ import java.util.List;
 public class OrderMapper {
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private final SimpleDateFormat simpleDateFormat;
-    private final ProductRepository productRepository;
 
-    public OrderMapper(ProductRepository productRepository) {
+    public OrderMapper() {
         simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
-        this.productRepository = productRepository;
     }
 
     public OrderRequest convertOrder(Order order) {
@@ -68,15 +66,19 @@ public class OrderMapper {
 
 
     private OrderedProduct parseItem(Item item, Order order) {
-        Product product = productRepository.getProductsMap().get(item.getId());
-        OrderedProduct orderedProduct = new OrderedProduct(product, order);
+        OrderedProduct orderedProduct = new OrderedProduct(order);
         orderedProduct.setCupSize(CupSize.fromId(item.getSize()));
         orderedProduct.setQuantity(item.getQuantity());
         orderedProduct.setSugarQuantity(item.getSugarQuantity());
         orderedProduct.setTakeaway(item.isTakeaway());
+        orderedProduct.setCoffeeName(item.getCoffeeName());
+        orderedProduct.setCoffeeId(item.getCoffeeId());
+        orderedProduct.setCoffeeImageUrl(item.getImageUrl());
         orderedProduct.setNote(item.getNote());
-        for (OrderIngredient ingredient : item.getIngredients()) {
-            orderedProduct.getIngredients().add(Ingredient.fromId(ingredient.getProductId()));
+        if (item.hasIngredients()) {
+            for (OrderIngredient ingredient : item.getIngredients()) {
+                orderedProduct.getIngredients().add(Ingredient.fromId(ingredient.getProductId()));
+            }
         }
         return orderedProduct;
     }

@@ -55,7 +55,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             if (quantity != null) {
                 productsQuantity.put(order.getProduct().getId(), quantity + INCREMENT);
             } else {
-                productsQuantity.put(order.getProduct().getId(), INCREMENT);
+                productsQuantity.put(order.getProduct().getId(), order.getQuantity());
             }
         }
     }
@@ -122,6 +122,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     .apply(new RequestOptions().circleCropTransform())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .fitCenter()
                     .into(productImage);
         }
     }

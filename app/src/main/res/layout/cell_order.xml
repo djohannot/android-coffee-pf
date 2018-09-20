@@ -53,7 +53,10 @@
         android:textColor="@color/dark"
         android:textSize="14sp"
         android:background="@drawable/shape_round_corner_status_pending"
-        android:padding="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         tools:text="Your order is Ready"
         android:visibility="visible"/>
 

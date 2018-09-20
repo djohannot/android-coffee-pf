@@ -146,7 +146,20 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
         }
         productName.setText(presenter.getProduct().getName());
         productQuantity.setText(String.valueOf(presenter.getOrderEntry().getQuantity()));
-
+        switch (presenter.getOrderEntry().getSugarQuantity()){
+            case 1:
+                sugar1.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sugar_1_selected));
+                break;
+            case 2:
+                sugar2.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sugar_2_selected));
+                break;
+            case 3:
+                sugar3.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sugar_3_selected));
+                break;
+            default:
+                sugar0.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sugar_0_selected));
+                break;
+        }
 
     }
 

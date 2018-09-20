@@ -24,8 +24,8 @@ public class OrderEntry implements Parcelable {
         ingredients = new ArrayList<>();
     }
 
-    public OrderEntry(OrderedProduct orderedProduct) {
-        this.product = orderedProduct.getProduct();
+    public OrderEntry(OrderedProduct orderedProduct, Product product) {
+        this.product = product;
         this.quantity = orderedProduct.getQuantity();
         this.cupSize = orderedProduct.getCupSize();
         this.note = orderedProduct.getNote();

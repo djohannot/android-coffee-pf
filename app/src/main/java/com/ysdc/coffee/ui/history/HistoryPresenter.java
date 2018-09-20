@@ -39,7 +39,7 @@ public class HistoryPresenter<V extends HistoryMvpView> extends BasePresenter<V>
     }
     @Override
     public void addOrder(OrderedProduct orderedProduct){
-        orderRepository.addProductToOrder(new OrderEntry(orderedProduct));
+        orderRepository.addProductToOrder(new OrderEntry(productRepository.getProductsMap().get(orderedProduct.getCoffeeId())));
     }
 
 }
