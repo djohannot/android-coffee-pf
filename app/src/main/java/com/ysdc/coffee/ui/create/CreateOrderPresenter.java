@@ -36,6 +36,10 @@ public class CreateOrderPresenter<V extends CreateOrderMvpView> extends BasePres
     private void load() {
     }
 
+    @Override
+    public OrderEntry getOrderEntry(){
+        return entry;
+    }
 
     @Override
     public Product getProduct() {

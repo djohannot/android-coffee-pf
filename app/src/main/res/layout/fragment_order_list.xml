@@ -34,6 +34,16 @@
                 android:textSize="18sp"
                 android:textStyle="normal"
                 android:text="@string/title_order_long" />
+
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/delete"
+                android:background="@color/transparent"/>
         </RelativeLayout>
 
         <RelativeLayout

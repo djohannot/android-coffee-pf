@@ -145,6 +145,8 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
                     .into(productImage);
         }
         productName.setText(presenter.getProduct().getName());
+        productQuantity.setText(String.valueOf(presenter.getOrderEntry().getQuantity()));
+
 
     }
 

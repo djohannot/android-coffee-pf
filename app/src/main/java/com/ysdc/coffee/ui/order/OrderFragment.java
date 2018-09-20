@@ -1,5 +1,6 @@
 package com.ysdc.coffee.ui.order;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -170,14 +171,16 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
 
     @OnClick(R.id.send_btn)
     public void onSendClicked() {
-        compositeDisposable.add(presenter.sendOrder().subscribe(() -> {
-            orderSent();
-            presenter.cleanCurrentOrder();
-            adapter.updateProductsQuantities(presenter.getOrderEntries());
-            adapter.notifyDataSetChanged();
-            refreshSendLayout();
+        compositeDisposable.add(presenter.sendOrder()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
+                    orderSent();
+                    presenter.cleanCurrentOrder();
+                    adapter.updateProductsQuantities(presenter.getOrderEntries());
+                    adapter.notifyDataSetChanged();
+                    refreshSendLayout();
 
-        }));
+                }));
     }
 
     private void orderSent() {
@@ -185,6 +188,23 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
                 .setMessage(getResources().getString(R.string.order_sent))
                 .setPositiveButton(getActivity().getResources().getString(R.string.action_ok), null)
                 .setCancelable(false)
+                .create()
+                .show();
+    }
+
+    @OnClick(R.id.delete)
+    public void clearOrder(){
+        new AlertDialog.Builder(getActivity())
+                .setMessage(getResources().getString(R.string.clean_order))
+                .setPositiveButton(getActivity().getResources().getString(R.string.action_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        presenter.cleanCurrentOrder();
+                        adapter.updateProductsQuantities(presenter.getOrderEntries());
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .setCancelable(true)
                 .create()
                 .show();
     }

@@ -12,6 +12,8 @@ import io.reactivex.Completable;
 
 public interface CreateOrderMvpPresenter<V extends CreateOrderMvpView> extends MvpPresenter<V> {
 
+    OrderEntry getOrderEntry();
+
     Product getProduct();
 
     void incrementQuantity();
