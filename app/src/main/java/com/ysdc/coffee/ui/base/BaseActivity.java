@@ -4,14 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.jetradar.multibackstack.BackStackEntry;
+import com.jetradar.multibackstack.BackStackManager;
 import com.ysdc.coffee.R;
 import com.ysdc.coffee.app.MyApplication;
 import com.ysdc.coffee.exception.GoogleException;
@@ -19,6 +24,7 @@ import com.ysdc.coffee.exception.NoConnectivityException;
 import com.ysdc.coffee.exception.NotLoggedException;
 import com.ysdc.coffee.injection.component.ActivityComponent;
 import com.ysdc.coffee.injection.module.ActivityModule;
+import com.ysdc.coffee.ui.utils.MenuDisplayer;
 import com.ysdc.coffee.utils.NetworkUtils;
 
 import javax.inject.Inject;
@@ -29,19 +35,21 @@ import timber.log.Timber;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView, BaseFragment.Callback {
 
+    private static final String STATE_CURRENT_TAB_ID = "STATE_CURRENT_TAB_ID";
+    private static final String STATE_BACK_STACK_MANAGER = "STATE_BACK_STACK_MANAGER";
+    protected BackStackManager backStackManager;
+    @Inject
+    NetworkUtils networkUtils;
     private int curTabId;
     private ActivityComponent activityComponent;
     private Unbinder unBinder;
-    private AlertDialog versionDialog;
-
-    @Inject
-    NetworkUtils networkUtils;
-
+    private MenuDisplayer menuDisplayer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent = ((MyApplication) getApplication()).getAppComponent().childActivityComponent(new ActivityModule(this));
+        backStackManager = new BackStackManager();
     }
 
     public ActivityComponent getActivityComponent() {
@@ -49,21 +57,17 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     }
 
     @Override
-    protected void onStop() {
-        if (versionDialog != null) {
-            versionDialog.dismiss();
-        }
-        super.onStop();
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(STATE_CURRENT_TAB_ID, curTabId);
+        outState.putParcelable(STATE_BACK_STACK_MANAGER, backStackManager.saveState());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        curTabId = savedInstanceState.getInt(STATE_CURRENT_TAB_ID);
+        backStackManager.restoreState(savedInstanceState.getParcelable(STATE_BACK_STACK_MANAGER));
     }
 
     @Override
@@ -107,6 +111,16 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
         return networkUtils.isNetworkConnected(getApplicationContext());
     }
 
+    @Override
+    public void onFragmentAttached() {
+
+    }
+
+    @Override
+    public void onFragmentDetached(String tag) {
+
+    }
+
     public void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -126,6 +140,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
         if (unBinder != null) {
             unBinder.unbind();
         }
+        backStackManager = null;
         super.onDestroy();
     }
 
@@ -143,13 +158,70 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
         return getResources();
     }
 
-    @Override
-    public void onFragmentAttached() {
-
+    /**
+     * @return false if failed to put fragment in back stack. Relates to issue:
+     * java.lang.IllegalStateException: Fragment is not currently in the FragmentManager at
+     * android.support.v4.app.FragmentManagerImpl.saveFragmentInstanceState(FragmentManager.java:702)
+     */
+    protected boolean pushFragmentToBackStack(int hostId, @NonNull Fragment fragment) {
+        try {
+            BackStackEntry entry = BackStackEntry.create(getSupportFragmentManager(), fragment);
+            backStackManager.push(hostId, entry);
+            return true;
+        } catch (Exception e) {
+            Log.e("MultiBackStack", "Failed to add fragment to back stack", e);
+            return false;
+        }
     }
 
-    @Override
-    public void onFragmentDetached(String tag) {
+    @Nullable
+    protected Fragment popFragmentFromBackStack(int hostId) {
+        BackStackEntry entry = backStackManager.pop(hostId);
+        return entry != null ? entry.toFragment(this) : null;
+    }
 
+    @Nullable
+    protected Pair<Integer, Fragment> popFragmentFromBackStack() {
+        Pair<Integer, BackStackEntry> pair = backStackManager.pop();
+        return pair != null ? Pair.create(pair.first, pair.second.toFragment(this)) : null;
+    }
+
+    /**
+     * @return false if back stack is missing.
+     */
+    protected boolean resetBackStackToRoot(int hostId) {
+        return backStackManager.resetToRoot(hostId);
+    }
+
+    /**
+     * @return false if back stack is missing.
+     */
+    protected boolean clearBackStack(int hostId) {
+        return backStackManager.clear(hostId);
+    }
+
+    /**
+     * @return the number of fragments in back stack.
+     */
+    protected int backStackSize(int hostId) {
+        return backStackManager.backStackSize(hostId);
+    }
+
+    public void showFragment(@NonNull Fragment fragment) {
+        showFragment(fragment, true);
+    }
+
+    public void showFragment(@NonNull Fragment fragment, boolean addToBackStack) {
+        //Implemented by class that inherit, if they need it
+    }
+
+    protected void setMenuDisplayer(MenuDisplayer menuDisplayer) {
+        this.menuDisplayer = menuDisplayer;
+    }
+
+    public void showMenu(Integer menuId) {
+        if (menuDisplayer != null) {
+            menuDisplayer.showMenu(menuId);
+        }
     }
 }

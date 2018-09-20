@@ -170,4 +170,22 @@ public abstract class BaseFragment extends Fragment implements MvpView {
 
         void onFragmentDetached(String tag);
     }
+
+    public boolean isActionBarVisible() {
+        return true;
+    }
+
+    public boolean isBottomBarVisible() {
+        return true;
+    }
+
+    protected boolean shouldDisplayBackButton() {
+        return false;
+    }
+
+    public abstract boolean shouldToolbarBeElevated();
+
+    public abstract String getCustomTitle();
+
+    public abstract int getMenu();
 }

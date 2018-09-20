@@ -2,6 +2,7 @@ package com.ysdc.coffee.injection.component;
 
 import com.ysdc.coffee.injection.annotations.ActivityScope;
 import com.ysdc.coffee.injection.module.ActivityModule;
+import com.ysdc.coffee.ui.home.HomeActivity;
 import com.ysdc.coffee.ui.splash.SplashActivity;
 
 import dagger.Subcomponent;
@@ -14,4 +15,6 @@ import dagger.Subcomponent;
 public interface ActivityComponent {
 
     void inject(SplashActivity splashActivity);
+
+    void inject(HomeActivity homeActivity);
 }

@@ -9,4 +9,5 @@ public class AppConstants {
     //Shared
     public static final String EMPTY_STRING = "";
 
+    public static final String PROPERTY_FINDER_EMAIL = "propertyfinder.ae";
 }

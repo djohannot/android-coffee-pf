@@ -21,6 +21,11 @@ public class MyPreferences {
     //Application parameters
     public static final String BASE_URL = "BASE_URL";
 
+    public static final String USER_TOKEN = "USER_TOKEN";
+    public static final String USER_MAIL = "USER_MAIL";
+    public static final String USER_NAME = "USER_NAME";
+    public static final String USER_PICTURE = "USER_PICTURE";
+
 
     private final SharedPreferences sharedPrefs;
     private final Gson gson;
