@@ -3,6 +3,7 @@ package com.ysdc.coffee.data.network.service;
 import com.ysdc.coffee.data.network.model.NetworkOrder;
 import com.ysdc.coffee.data.network.model.OrderRequest;
 import com.ysdc.coffee.data.network.model.ProductResponse;
+import com.ysdc.coffee.data.network.model.RegisterPush;
 import com.ysdc.coffee.data.network.model.UpdateOrder;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import static com.ysdc.coffee.data.network.service.BaseService.HEADER_JSON;
 
@@ -44,6 +46,6 @@ public interface CoffeeService {
 
     @Headers(HEADER_JSON)
     @POST(ENDPOINT_PUSH)
-    Completable registerPushToken(String token);
+    Completable registerPushToken(@Body RegisterPush registerPush);
 
 }

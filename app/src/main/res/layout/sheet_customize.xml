@@ -263,7 +263,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:checked="true"
                             android:theme="@style/MySwitch" />
                     </RelativeLayout>
 
@@ -285,7 +284,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:checked="true"
                             android:theme="@style/MySwitch" />
                     </RelativeLayout>
 
@@ -307,7 +305,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:checked="true"
                             android:theme="@style/MySwitch" />
                     </RelativeLayout>
                 </LinearLayout>
@@ -340,7 +337,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="20dp"
                     android:layout_marginRight="30dp"
-                    android:checked="true"
                     android:theme="@style/MySwitch" />
 
                 <View
@@ -371,8 +367,7 @@
                         android:layout_height="wrap_content"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:imeOptions="actionGo"
-                        android:inputType="phone"
+                        android:imeOptions="actionDone"
                         android:maxLength="100" />
 
                 </android.support.design.widget.TextInputLayout>

@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by david on 1/25/18.
@@ -55,6 +56,11 @@ public class OrderPresenter<V extends OrderMvpView> extends BasePresenter<V> imp
 
     @Override
     public Completable sendOrder() {
-        return orderRepository.sendOrder();
+        return orderRepository.sendOrder().subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public void cleanCurrentOrder() {
+        orderRepository.cleanCurrentOrder();
     }
 }

@@ -38,4 +38,8 @@ public class OrderRepository {
                     }).ignoreElement();
         });
     }
+
+    public void cleanCurrentOrder() {
+        currentOrder = null;
+    }
 }

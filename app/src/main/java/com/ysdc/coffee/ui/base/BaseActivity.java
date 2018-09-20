@@ -224,4 +224,8 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
             menuDisplayer.showMenu(menuId);
         }
     }
+
+    public void displayResultTab(){
+
+    }
 }

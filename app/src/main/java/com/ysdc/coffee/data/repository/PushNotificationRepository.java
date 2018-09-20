@@ -61,6 +61,8 @@ public class PushNotificationRepository {
      * @return A completable event when the operation is done.
      */
     public Completable registerPushTokenOnBackend() {
-        return networkService.getCoffeeService().registerPushToken(appPrefs.getAsString(PUSH_TOKEN, EMPTY_STRING));
+        //TODO: when ready
+        return Completable.complete();
+        //return networkService.getCoffeeService().registerPushToken(appPrefs.getAsString(PUSH_TOKEN, EMPTY_STRING));
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,6 +49,10 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
     protected RelativeLayout send_Layout;
     @BindView(R.id.quantity_field)
     protected TextView quantityField;
+    @BindView(R.id.order_header_filled)
+    protected RelativeLayout headerFilled;
+    @BindView(R.id.order_header_empty)
+    protected RelativeLayout headerEmpty;
 
     public static OrderFragment newInstance() {
         return new OrderFragment();
@@ -143,6 +148,7 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
             @Override
             public void onAddOrderPressed() {
                 adapter.updateProductsQuantities(presenter.getOrderedProducts());
+                adapter.notifyDataSetChanged();
                 refreshSendLayout();
             }
         }, orderedProduct);
@@ -152,14 +158,34 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
     private void refreshSendLayout() {
         if(presenter.getOrderedProducts().isEmpty()){
             send_Layout.setVisibility(View.GONE);
+            headerEmpty.setVisibility(View.VISIBLE);
+            headerFilled.setVisibility(View.GONE);
         }else{
             send_Layout.setVisibility(View.VISIBLE);
+            headerEmpty.setVisibility(View.GONE);
+            headerFilled.setVisibility(View.VISIBLE);
             quantityField.setText(String.valueOf(presenter.getOrderedProducts().size()));
         }
     }
 
     @OnClick(R.id.send_btn)
     public void onSendClicked(){
-        compositeDisposable.add(presenter.sendOrder().subscribe());
+        compositeDisposable.add(presenter.sendOrder().subscribe(() ->{
+            orderSent();
+            presenter.cleanCurrentOrder();
+            adapter.updateProductsQuantities(presenter.getOrderedProducts());
+            adapter.notifyDataSetChanged();
+            refreshSendLayout();
+
+        }));
+    }
+
+    private void orderSent() {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(getResources().getString(R.string.order_sent))
+                .setPositiveButton(getActivity().getResources().getString(R.string.action_ok), null)
+                .setCancelable(false)
+                .create()
+                .show();
     }
 }

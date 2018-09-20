@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ysdc.coffee.R;
 import com.ysdc.coffee.ui.base.BaseFragment;
@@ -13,11 +15,19 @@ import com.ysdc.coffee.ui.utils.MenuDisplayer;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplayer {
 
     private Integer menuId;
+
+    @BindView(R.id.layout_close)
+    protected RelativeLayout closeLayout;
+    @BindView(R.id.layout_open)
+    protected RelativeLayout openLayout;
+    @BindView(R.id.status_queue)
+    protected TextView statusQueue;
 
     @Inject
     BarMvpPresenter<BarMvpView> presenter;
@@ -43,7 +53,7 @@ public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplay
 
     @Override
     protected void setUp(View view) {
-
+        updateView();
     }
 
     @Override
@@ -54,6 +64,11 @@ public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplay
     @Override
     public String getCustomTitle() {
         return getString(R.string.title_bar);
+    }
+
+    @Override
+    public boolean isActionBarVisible() {
+        return false;
     }
 
     @Override
@@ -71,5 +86,9 @@ public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplay
         if (getBaseActivity() != null) {
             getBaseActivity().supportInvalidateOptionsMenu();
         }
+    }
+
+    public void updateView(){
+
     }
 }

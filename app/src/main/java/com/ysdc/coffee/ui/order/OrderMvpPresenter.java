@@ -23,4 +23,6 @@ public interface OrderMvpPresenter<V extends OrderMvpView> extends MvpPresenter<
     OrderedProduct getOrderedProductForProduct(Product product);
 
     Completable sendOrder();
+
+    void cleanCurrentOrder();
 }

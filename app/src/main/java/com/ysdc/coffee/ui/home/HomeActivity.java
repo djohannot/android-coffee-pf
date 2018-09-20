@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,8 +47,8 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
     protected NoSwipePager viewPager;
     @BindView(R.id.fragmentContainer)
     protected FrameLayout fragmentContainer;
-    @BindView(R.id.barLayout)
-    AppBarLayout barLayout;
+    //    @BindView(R.id.barLayout)
+//    AppBarLayout barLayout;
     @Inject
     HomeMvpPresenter<HomeMvpView> presenter;
     private FragmentAdapter adapter;
@@ -145,6 +144,11 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
         return true;
     }
 
+    @Override
+    public void displayResultTab() {
+        bottomNavigation.setCurrentItem(TAB_HISTORY);
+    }
+
     private void setActionBarVisible(boolean actionBarVisible) {
         if (actionBarVisible != getSupportActionBar().isShowing()) {
             if (actionBarVisible) {
@@ -156,7 +160,7 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
     }
 
     public void requireBarElevation(boolean required) {
-        barLayout.setElevation(required ? DEFAULT_ELEVATION : NO_ELEVATION);
+//        barLayout.setElevation(required ? DEFAULT_ELEVATION : NO_ELEVATION);
     }
 
     private void initializeView() {
@@ -188,12 +192,12 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
         //  Displays item Title always (for selected and non-selected items)
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 
-        bottomNavigation.setCurrentItem(0);
+        bottomNavigation.setCurrentItem(TAB_BAR);
         setMenuDisplayer(barFragment);
     }
 
     private void showTopAndBottomBars() {
-        barLayout.setExpanded(true, true);
+//        barLayout.setExpanded(true, true);
     }
 
     private void setBottomBarVisible(boolean bottomBarVisible) {

@@ -9,15 +9,14 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/barLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/topBarColor">
+        android:layout_height="0dp"
+        android:visibility="gone">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="@drawable/group_12"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
                 android:layout_width="244dp"

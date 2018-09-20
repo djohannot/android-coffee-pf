@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
     CreateOrderMvpPresenter<CreateOrderMvpView> presenter;
 
     @BindView(R.id.product_image)
-    protected ImageButton productImage;
+    protected ImageView productImage;
     @BindView(R.id.product_name)
     protected TextView productName;
     @BindView(R.id.product_quantity)
@@ -61,6 +62,15 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
     protected ImageButton sugar2;
     @BindView(R.id.sugar_3)
     protected ImageButton sugar3;
+    @BindView(R.id.carmel_flavor)
+    protected Switch carmel;
+    @BindView(R.id.toffeenut_flavor)
+    protected Switch toffeenut;
+    @BindView(R.id.vanilla_flavor)
+    protected Switch vanilla;
+    @BindView(R.id.take_away)
+    protected Switch takeaway;
+
 
     private CompositeDisposable subscriptions;
     private CreateListener listener;
@@ -221,32 +231,13 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
         presenter.setSugarSelected(3);
     }
 
-    @OnTouch(R.id.carmel_flavor)
-    public boolean carmelChanged(Switch switchView, MotionEvent event) {
-        presenter.carmelSelected(event.getAction() == MotionEvent.ACTION_UP);
-        return true;
-    }
-
-    @OnTouch(R.id.toffeenut_flavor)
-    public boolean toffeenutChanged(Switch switchView, MotionEvent event) {
-        presenter.toffeenutSelected(event.getAction() == MotionEvent.ACTION_UP);
-        return true;
-    }
-
-    @OnTouch(R.id.vanilla_flavor)
-    public boolean vanillaChanged(Switch switchView, MotionEvent event) {
-        presenter.vanillaSelected(event.getAction() == MotionEvent.ACTION_UP);
-        return true;
-    }
-
-    @OnTouch(R.id.take_away)
-    public boolean takeAwayChanged(Switch switchView, MotionEvent event) {
-        presenter.isTakeAway(event.getAction() == MotionEvent.ACTION_UP);
-        return true;
-    }
-
     @OnClick(R.id.btn_order)
     public void addOrderPressed() {
+
+        presenter.carmelSelected(carmel.isChecked());
+        presenter.toffeenutSelected(toffeenut.isChecked());
+        presenter.vanillaSelected(vanilla.isChecked());
+        presenter.isTakeAway(takeaway.isChecked());
         subscriptions.add(
                 presenter.addOrder().subscribe(() -> {
                     listener.onAddOrderPressed();

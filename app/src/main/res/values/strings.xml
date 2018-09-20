@@ -13,7 +13,7 @@
     <!--Home screen-->
     <string name="home_person_queue">in the queue</string>
     <string name="no_order_welcome">Welcome to the coffee bar!</string>
-    <string name="no_order_message">Order now and we will inform you when it’s ready.</string>
+    <string name="no_order_message">Order now and we will inform you when it’s ready</string>
     <string name="coffee_current_status">Your order is</string>
     <string name="coffee_ready">Your order is ready!</string>
     <string name="coffee_ready_token">Use this token to get your coffee.</string>
@@ -37,7 +37,7 @@
     <string name="customize_note_title">Note</string>
     <string name="title_bar">Home</string>
     <string name="title_History">History</string>
-    <string name="title_order">Order</string>
+    <string name="title_order">Select your beverage</string>
     <string name="sugar_title">Sugar</string>
     <string name="size_title">Size</string>
     <string name="additions_title">Additions</string>
@@ -45,6 +45,8 @@
     <string name="take_away_title">Take away</string>
     <string name="order_note_title">Add note</string>
     <string name="action_brew">Brew it</string>
+    <string name="order_sent">Your order has been sent successfully</string>
+    <string name="action_ok">OK</string>
     <plurals name="person">
         <item quantity="zero">Nobody</item>
         <item quantity="one">%d person</item>

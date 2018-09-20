@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Item {
-    @SerializedName("id")
+    @SerializedName("coffee_id")
     private String id;
     @SerializedName("name")
     private String name;
