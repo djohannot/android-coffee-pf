@@ -54,66 +54,6 @@ public class NetworkOrder {
         return items;
     }
 
-    class Item {
-        @SerializedName("id")
-        private String id;
-        @SerializedName("name")
-        private String name;
-        @SerializedName("size")
-        private Integer size;
-        @SerializedName("take_away")
-        private boolean takeaway;
-        @SerializedName("description")
-        private String description;
-        @SerializedName("quantity")
-        private String quantity;
-        @SerializedName("note")
-        private String note;
-        @SerializedName("image")
-        private String imageUrl;
-        @SerializedName("ingredients")
-        private List<OrderIngredient> ingredients;
-
-        public Item() {
-            this.ingredients = new ArrayList<>();
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Integer getSize() {
-            return size;
-        }
-
-        public boolean isTakeaway() {
-            return takeaway;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getQuantity() {
-            return quantity;
-        }
-
-        public String getNote() {
-            return note;
-        }
-
-        public String getImageUrl() {
-            return imageUrl;
-        }
-
-        public List<OrderIngredient> getIngredients() {
-            return ingredients;
-        }
-    }
 
     class User {
         @SerializedName("id")
@@ -164,26 +104,6 @@ public class NetworkOrder {
 
         public String getDescription() {
             return description;
-        }
-    }
-
-    class OrderIngredient {
-        @SerializedName("ingredient_id")
-        private String productId;
-        @SerializedName("quantity")
-        private Integer quantity;
-
-        public OrderIngredient(String productId, Integer quantity) {
-            this.productId = productId;
-            this.quantity = quantity;
-        }
-
-        public String getProductId() {
-            return productId;
-        }
-
-        public Integer getQuantity() {
-            return quantity;
         }
     }
 

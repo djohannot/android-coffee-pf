@@ -11,6 +11,7 @@ import com.ysdc.coffee.ui.base.BasePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 /**
@@ -50,5 +51,10 @@ public class OrderPresenter<V extends OrderMvpView> extends BasePresenter<V> imp
             }
         }
         return new OrderedProduct(product);
+    }
+
+    @Override
+    public Completable sendOrder() {
+        return orderRepository.sendOrder();
     }
 }

@@ -3,6 +3,7 @@ package com.ysdc.coffee.injection.module;
 import android.content.Context;
 
 import com.ysdc.coffee.data.ErrorHandler;
+import com.ysdc.coffee.data.repository.PushNotificationRepository;
 import com.ysdc.coffee.data.repository.UserRepository;
 import com.ysdc.coffee.injection.annotations.ActivityContext;
 import com.ysdc.coffee.injection.annotations.ActivityScope;
@@ -39,7 +40,7 @@ public class ActivityModule {
     }
     @Provides
     @ActivityScope
-    HomeMvpPresenter<HomeMvpView> provideHomePresenter(ErrorHandler errorHandler, UserRepository userRepository) {
-        return new HomePresenter<>(errorHandler);
+    HomeMvpPresenter<HomeMvpView> provideHomePresenter(ErrorHandler errorHandler, PushNotificationRepository pushNotificationRepository) {
+        return new HomePresenter<>(errorHandler, pushNotificationRepository);
     }
 }

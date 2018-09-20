@@ -146,7 +146,7 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
         dismiss();
     }
 
-    @OnClick(R.id.btn_add)
+    @OnClick(R.id.quantity_add)
     public void addPressed() {
         presenter.incrementQuantity();
     }

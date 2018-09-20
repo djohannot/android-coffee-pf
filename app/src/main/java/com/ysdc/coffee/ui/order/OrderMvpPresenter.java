@@ -7,6 +7,7 @@ import com.ysdc.coffee.ui.base.MvpPresenter;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 /**
@@ -20,4 +21,6 @@ public interface OrderMvpPresenter<V extends OrderMvpView> extends MvpPresenter<
     List<OrderedProduct> getOrderedProducts();
 
     OrderedProduct getOrderedProductForProduct(Product product);
+
+    Completable sendOrder();
 }

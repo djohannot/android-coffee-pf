@@ -5,5 +5,5 @@ package com.ysdc.coffee.data.network.service;
  */
 
 public interface BaseService {
-    //TODO: set here constants shared by different services
+    String HEADER_JSON = "Content-Type: application/json";
 }

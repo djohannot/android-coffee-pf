@@ -44,6 +44,7 @@
     <string name="topping_carmel">Carmel Flavor</string>
     <string name="take_away_title">Take away</string>
     <string name="order_note_title">Add note</string>
+    <string name="action_brew">Brew it</string>
     <plurals name="person">
         <item quantity="zero">Nobody</item>
         <item quantity="one">%d person</item>

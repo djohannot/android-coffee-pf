@@ -12,47 +12,15 @@ public class OrderRequest {
     @SerializedName("items")
     private List<Item> items;
 
-    public OrderRequest(String destinationId) {
-        this.destinationId = destinationId;
+    public OrderRequest() {
         this.items = new ArrayList<>();
     }
 
-    class Item {
-        @SerializedName("coffee_id")
-        private String id;
-        @SerializedName("quantity")
-        private Integer quantity;
-        @SerializedName("note")
-        private String note;
-        @SerializedName("take_away")
-        private boolean takeaway;
-        @SerializedName("size")
-        private Integer size;
-        @SerializedName("ingredients")
-        private List<OrderIngredient> ingredients;
-
-        public Item(String productId, int size, boolean takeaway, String note, Map<String, Integer> orderIngredients) {
-            this.id = productId;
-            this.size = size;
-            this.takeaway = takeaway;
-            this.note = note;
-            this.ingredients = new ArrayList<>();
-            for (String key : orderIngredients.keySet()) {
-                ingredients.add(new OrderIngredient(key, orderIngredients.get(key)));
-            }
-        }
+    public List<Item> getItems() {
+        return items;
     }
 
-    class OrderIngredient {
-        @SerializedName("ingredient_id")
-        private String productId;
-        @SerializedName("quantity")
-        private Integer quantity;
-
-        public OrderIngredient(String productId, Integer quantity) {
-            this.productId = productId;
-            this.quantity = quantity;
-        }
+    public void setDestinationId(String destinationId) {
+        this.destinationId = destinationId;
     }
-
 }

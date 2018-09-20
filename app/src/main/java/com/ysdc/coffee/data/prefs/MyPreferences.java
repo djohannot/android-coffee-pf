@@ -25,6 +25,11 @@ public class MyPreferences {
     public static final String USER_MAIL = "USER_MAIL";
     public static final String USER_NAME = "USER_NAME";
     public static final String USER_PICTURE = "USER_PICTURE";
+    //Push notification
+    public static final String PUSH_TOKEN = "PUSH_TOKEN";
+    public static final String PUSH_TOKEN_STORED = "PUSH_TOKEN_STORED";
+    //Device ID, used by backend to identify a phone (related to push)
+    public static final String DEVICE_ID = "DEVICE_ID";
 
 
     private final SharedPreferences sharedPrefs;

@@ -3,6 +3,10 @@ package com.ysdc.coffee.data.repository;
 import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.network.DefaultNetworkServiceCreator;
+import com.ysdc.coffee.data.network.mapper.OrderMapper;
+
+import io.reactivex.Completable;
+import timber.log.Timber;
 
 public class OrderRepository {
 
@@ -22,5 +26,16 @@ public class OrderRepository {
 
     public Order getCurrentOrder(){
         return currentOrder;
+    }
+
+    public Completable sendOrder(){
+        return Completable.defer(() -> {
+            OrderMapper mapper = new OrderMapper();
+
+            return networkServiceCreator.getCoffeeService().placeOrder(mapper.convertOrder(currentOrder))
+                    .doOnSuccess(networkOrder -> {
+                        Timber.d("order pushed! %s", networkOrder);
+                    }).ignoreElement();
+        });
     }
 }

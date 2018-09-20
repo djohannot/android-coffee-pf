@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ysdc.coffee.R;
 import com.ysdc.coffee.data.model.OrderedProduct;
@@ -23,6 +25,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -41,6 +44,10 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
     protected RecyclerView productList;
     @BindView(R.id.swipeRefreshLayout)
     protected SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.send_layout)
+    protected RelativeLayout send_Layout;
+    @BindView(R.id.quantity_field)
+    protected TextView quantityField;
 
     public static OrderFragment newInstance() {
         return new OrderFragment();
@@ -65,6 +72,7 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
     @Override
     protected void setUp(View view) {
         compositeDisposable = new CompositeDisposable();
+        refreshSendLayout();
 
         productList.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -135,8 +143,23 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
             @Override
             public void onAddOrderPressed() {
                 adapter.updateProductsQuantities(presenter.getOrderedProducts());
+                refreshSendLayout();
             }
         }, orderedProduct);
         createOrderFragment.show(getActivity().getSupportFragmentManager(), createOrderFragment.getTag());
+    }
+
+    private void refreshSendLayout() {
+        if(presenter.getOrderedProducts().isEmpty()){
+            send_Layout.setVisibility(View.GONE);
+        }else{
+            send_Layout.setVisibility(View.VISIBLE);
+            quantityField.setText(String.valueOf(presenter.getOrderedProducts().size()));
+        }
+    }
+
+    @OnClick(R.id.send_btn)
+    public void onSendClicked(){
+        compositeDisposable.add(presenter.sendOrder().subscribe());
     }
 }
