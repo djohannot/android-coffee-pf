@@ -1,13 +1,19 @@
 package com.ysdc.coffee.data.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.ysdc.coffee.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderedProduct implements Parcelable {
+import static com.ysdc.coffee.utils.AppConstants.EMPTY_STRING;
+
+public class OrderedProduct{
     private final Product product;
+    private final Order order;
     private List<Ingredient> ingredients;
     private CupSize cupSize;
     private int quantity;
@@ -15,8 +21,9 @@ public class OrderedProduct implements Parcelable {
     private boolean takeaway;
     private Integer sugarQuantity;
 
-    public OrderedProduct(Product product){
+    public OrderedProduct(Product product, Order order){
         this.product = product;
+        this.order = order;
         quantity = 1;
         cupSize = CupSize.MEDIUM;
         takeaway = false;
@@ -25,6 +32,10 @@ public class OrderedProduct implements Parcelable {
     }
     public Product getProduct() {
         return product;
+    }
+
+    public Order getOrder() {
+        return order;
     }
 
     public List<Ingredient> getIngredients() {
@@ -75,43 +86,9 @@ public class OrderedProduct implements Parcelable {
         this.sugarQuantity = sugarQuantity;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getOrderDetails(Context context) {
+        return context.getString(cupSize.getLocalizableKey()) + ", " +
+                sugarQuantity + context.getString(R.string.sugar_stick) + ", " +
+                getIngredients().size()  + context.getString(R.string.ingredients) + (takeaway ? ", " + context.getString(R.string.take_away) : EMPTY_STRING);
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.product, flags);
-        dest.writeList(this.ingredients);
-        dest.writeInt(this.cupSize == null ? -1 : this.cupSize.ordinal());
-        dest.writeInt(this.quantity);
-        dest.writeString(this.note);
-        dest.writeByte(this.takeaway ? (byte) 1 : (byte) 0);
-        dest.writeValue(this.sugarQuantity);
-    }
-
-    protected OrderedProduct(Parcel in) {
-        this.product = in.readParcelable(Product.class.getClassLoader());
-        this.ingredients = new ArrayList<Ingredient>();
-        in.readList(this.ingredients, Ingredient.class.getClassLoader());
-        int tmpCupSize = in.readInt();
-        this.cupSize = tmpCupSize == -1 ? null : CupSize.values()[tmpCupSize];
-        this.quantity = in.readInt();
-        this.note = in.readString();
-        this.takeaway = in.readByte() != 0;
-        this.sugarQuantity = (Integer) in.readValue(Integer.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<OrderedProduct> CREATOR = new Parcelable.Creator<OrderedProduct>() {
-        @Override
-        public OrderedProduct createFromParcel(Parcel source) {
-            return new OrderedProduct(source);
-        }
-
-        @Override
-        public OrderedProduct[] newArray(int size) {
-            return new OrderedProduct[size];
-        }
-    };
 }

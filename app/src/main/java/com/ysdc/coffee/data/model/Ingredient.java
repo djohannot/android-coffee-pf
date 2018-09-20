@@ -13,4 +13,12 @@ public enum Ingredient {
         return id;
     }
 
+    public static Ingredient fromId(String productId) {
+        for (Ingredient ingredient : values()) {
+            if (ingredient.id == productId) {
+                return ingredient;
+            }
+        }
+        return null;
+    }
 }

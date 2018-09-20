@@ -9,7 +9,6 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -22,8 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.ysdc.coffee.R;
 import com.ysdc.coffee.data.model.CupSize;
-import com.ysdc.coffee.data.model.OrderedProduct;
-import com.ysdc.coffee.data.model.Product;
+import com.ysdc.coffee.data.model.OrderEntry;
 import com.ysdc.coffee.injection.module.GlideApp;
 import com.ysdc.coffee.ui.base.BaseBottomSheetFragment;
 
@@ -32,7 +30,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTouch;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class CreateOrderFragment extends BaseBottomSheetFragment implements CreateOrderMvpView {
@@ -79,11 +76,11 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
         void onAddOrderPressed();
     }
 
-    public static CreateOrderFragment newInstance(CreateListener listener, OrderedProduct orderedProduct) {
+    public static CreateOrderFragment newInstance(CreateListener listener, OrderEntry entry) {
         CreateOrderFragment createOrderFragment = new CreateOrderFragment();
         createOrderFragment.listener = listener;
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRA_ORDER_PRODUCT, orderedProduct);
+        bundle.putParcelable(EXTRA_ORDER_PRODUCT, entry);
         createOrderFragment.setArguments(bundle);
         return createOrderFragment;
     }
@@ -95,7 +92,7 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
         setUnBinder(ButterKnife.bind(this, view));
         Bundle arguments = getArguments();
         if (arguments != null) {
-            presenter.setOrderProduct(arguments.getParcelable(EXTRA_ORDER_PRODUCT));
+            presenter.setOrderEntry(arguments.getParcelable(EXTRA_ORDER_PRODUCT));
         }
         presenter.onAttach(CreateOrderFragment.this);
         return view;

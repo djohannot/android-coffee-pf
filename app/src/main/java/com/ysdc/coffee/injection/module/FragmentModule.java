@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import com.ysdc.coffee.data.ErrorHandler;
+import com.ysdc.coffee.data.prefs.MyPreferences;
+import com.ysdc.coffee.data.repository.ConfigurationRepository;
 import com.ysdc.coffee.data.repository.OrderRepository;
 import com.ysdc.coffee.data.repository.ProductRepository;
 import com.ysdc.coffee.injection.annotations.ActivityScope;
@@ -51,8 +53,8 @@ public class FragmentModule {
 
     @Provides
     @FragmentScope
-    BarMvpPresenter<BarMvpView> provideBarPresenter(ErrorHandler errorHandler) {
-        return new BarPresenter<>(errorHandler);
+    BarMvpPresenter<BarMvpView> provideBarPresenter(ErrorHandler errorHandler, ConfigurationRepository configurationRepository, MyPreferences preferences) {
+        return new BarPresenter<>(errorHandler, configurationRepository, preferences);
     }
 
     @Provides
@@ -63,8 +65,8 @@ public class FragmentModule {
 
     @Provides
     @FragmentScope
-    HistoryMvpPresenter<HistoryMvpView> provideHistoryPresenter(ErrorHandler errorHandler) {
-        return new HistoryPresenter<>(errorHandler);
+    HistoryMvpPresenter<HistoryMvpView> provideHistoryPresenter(ErrorHandler errorHandler, ProductRepository productRepository, OrderRepository orderRepository) {
+        return new HistoryPresenter<>(errorHandler, productRepository, orderRepository);
     }
 
     @Provides

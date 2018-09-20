@@ -23,8 +23,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    OrderRepository provideOrderRepository(DefaultNetworkServiceCreator networkServiceCreator) {
-        return new OrderRepository(networkServiceCreator);
+    OrderRepository provideOrderRepository(DefaultNetworkServiceCreator networkServiceCreator, ProductRepository productRepository) {
+        return new OrderRepository(networkServiceCreator, productRepository);
     }
 
     @Provides

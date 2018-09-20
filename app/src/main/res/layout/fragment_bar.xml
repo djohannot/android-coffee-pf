@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bar_status_img"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="272dp"
@@ -28,7 +29,7 @@
             android:textColor="#8c746a"
             android:textSize="18sp"
             android:textStyle="normal"
-            tools:text="Coffee bar is closed, please visit us again from 8:30-5:30 Sunday - Thursday" />
+            android:text="@string/bar_close_message" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -60,6 +61,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/shape_round_corner_welcom"
             android:gravity="center"
+            android:visibility="gone"
             android:padding="@dimen/empty">
 
             <TextView

@@ -2,10 +2,12 @@ package com.ysdc.coffee.data.repository;
 
 import com.google.firebase.messaging.RemoteMessage;
 import com.ysdc.coffee.data.network.DefaultNetworkServiceCreator;
+import com.ysdc.coffee.data.network.model.RegisterPush;
 import com.ysdc.coffee.data.prefs.MyPreferences;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
@@ -61,8 +63,10 @@ public class PushNotificationRepository {
      * @return A completable event when the operation is done.
      */
     public Completable registerPushTokenOnBackend() {
-        //TODO: when ready
-        return Completable.complete();
-        //return networkService.getCoffeeService().registerPushToken(appPrefs.getAsString(PUSH_TOKEN, EMPTY_STRING));
+        return Completable.defer(() -> {
+            RegisterPush registerPush = new RegisterPush(appPrefs.getAsString(PUSH_TOKEN, EMPTY_STRING));
+            return networkService.getCoffeeService().registerPushToken(registerPush)
+                    .subscribeOn(Schedulers.io()).doOnError(throwable -> Timber.e(throwable, "ERROR")).ignoreElement();
+        });
     }
 }

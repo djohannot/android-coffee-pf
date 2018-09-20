@@ -3,24 +3,42 @@ package com.ysdc.coffee.ui.history;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ysdc.coffee.R;
+import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.ui.base.BaseFragment;
 import com.ysdc.coffee.ui.utils.MenuDisplayer;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.ysdc.coffee.utils.AppConstants.EMPTY_STRING;
 
 public class HistoryFragment extends BaseFragment implements HistoryMvpView, MenuDisplayer {
 
     private Integer menuId;
+    private CompositeDisposable compositeDisposable;
+    private OrderAdapter adapter;
 
     @Inject
     HistoryMvpPresenter<HistoryMvpView> presenter;
+    @BindView(R.id.order_list)
+    protected RecyclerView ordersList;
+    @BindView(R.id.swipeRefreshLayout)
+    protected SwipeRefreshLayout swipeRefreshLayout;
 
     public static HistoryFragment newInstance() {
         return new HistoryFragment();
@@ -38,12 +56,38 @@ public class HistoryFragment extends BaseFragment implements HistoryMvpView, Men
     @Override
     public void onDestroyView() {
         presenter.onDetach();
+        compositeDisposable.dispose();
         super.onDestroyView();
     }
 
     @Override
     protected void setUp(View view) {
+        compositeDisposable = new CompositeDisposable();
 
+        ordersList.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        ordersList.setLayoutManager(layoutManager);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            loadOrders();
+        });
+
+        loadOrders();
+    }
+
+    private void loadOrders() {
+        compositeDisposable.add(presenter.getOrderedProduct()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    swipeRefreshLayout.setRefreshing(false);
+                })
+                .subscribe(orderedProducts -> {
+                    if (!orderedProducts.isEmpty()) {
+                        showOrders(orderedProducts);
+                    }
+                }, throwable -> onError(throwable))
+        );
     }
 
     @Override
@@ -53,7 +97,7 @@ public class HistoryFragment extends BaseFragment implements HistoryMvpView, Men
 
     @Override
     public String getCustomTitle() {
-        return getString(R.string.title_History);
+        return EMPTY_STRING;
     }
 
     @Override
@@ -65,11 +109,29 @@ public class HistoryFragment extends BaseFragment implements HistoryMvpView, Men
         }
     }
 
+    private void showOrders(List<OrderedProduct> products) {
+        if (adapter == null) {
+            adapter = new OrderAdapter(products, this::showDialog, getActivity());
+            ordersList.setAdapter(adapter);
+        } else {
+            adapter.updateOrders(products);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showDialog(OrderedProduct orderedProduct) {
+        presenter.addOrder(orderedProduct);
+    }
+
     @Override
     public void showMenu(Integer menuId) {
         this.menuId = menuId;
         if (getBaseActivity() != null) {
             getBaseActivity().supportInvalidateOptionsMenu();
         }
+    }
+
+    public void updateContent(){
+        loadOrders();
     }
 }

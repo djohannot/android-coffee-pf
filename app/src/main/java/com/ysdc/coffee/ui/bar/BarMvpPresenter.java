@@ -8,4 +8,5 @@ import com.ysdc.coffee.ui.base.MvpPresenter;
 
 public interface BarMvpPresenter<V extends BarMvpView> extends MvpPresenter<V> {
 
+    void updateContent();
 }

@@ -3,31 +3,32 @@ package com.ysdc.coffee.data.repository;
 import com.ysdc.coffee.data.network.DefaultNetworkServiceCreator;
 import com.ysdc.coffee.data.prefs.MyPreferences;
 
-import java.util.UUID;
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-import timber.log.Timber;
-
-import static com.ysdc.coffee.data.prefs.MyPreferences.DEVICE_ID;
+import static com.ysdc.coffee.data.prefs.MyPreferences.BAR_OPEN;
 
 public class ConfigurationRepository {
 
     private final DefaultNetworkServiceCreator networkServiceCreator;
     private final MyPreferences preferences;
 
-    public ConfigurationRepository(MyPreferences preferences, DefaultNetworkServiceCreator networkServiceCreator){
+    public ConfigurationRepository(MyPreferences preferences, DefaultNetworkServiceCreator networkServiceCreator) {
         this.preferences = preferences;
         this.networkServiceCreator = networkServiceCreator;
     }
 
-    /**
-     * Build a new device ID is there is not one already existing in the preferences
-     *
-     * @return the device ID
-     */
-    private String getDeviceID() {
-        if (preferences.getAsString(DEVICE_ID).isEmpty()) {
-            preferences.set(DEVICE_ID, UUID.randomUUID().toString());
-        }
-        return preferences.getAsString(DEVICE_ID);
+    public Completable refreshConfiguration() {
+        return networkServiceCreator.getCoffeeService().getSettings()
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess(configuration -> {
+                    preferences.set(BAR_OPEN, configuration.isBarOpen());
+                }).ignoreElement();
     }
+
+    public boolean isBarOpen(){
+        return preferences.getAsBoolean(BAR_OPEN,false);
+    }
+
 }

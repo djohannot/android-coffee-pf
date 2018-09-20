@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NetworkOrder {
-    @SerializedName("coffee_id")
+    @SerializedName("id")
     private String id;
     @SerializedName("user")
     private User user;
@@ -54,6 +54,17 @@ public class NetworkOrder {
         return items;
     }
 
+    public String getUserName() {
+        return user.name;
+    }
+
+    public String getUserEmail() {
+        return user.email;
+    }
+
+    public String getImageUrl() {
+        return user.imageUrl;
+    }
 
     class User {
         @SerializedName("id")

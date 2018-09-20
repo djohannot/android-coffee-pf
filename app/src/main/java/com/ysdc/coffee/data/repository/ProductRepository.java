@@ -8,7 +8,9 @@ import com.ysdc.coffee.exception.NotLoggedException;
 import com.ysdc.coffee.exception.ValidationException;
 import com.ysdc.coffee.utils.CrashlyticsUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -20,9 +22,15 @@ public class ProductRepository {
     private static final int HTTP_NOT_FOUND = 404;
 
     private final DefaultNetworkServiceCreator networkServiceCreator;
+    private Map<String, Product> productsMap;
 
     public ProductRepository(DefaultNetworkServiceCreator networkServiceCreator) {
         this.networkServiceCreator = networkServiceCreator;
+        productsMap = new HashMap<>();
+    }
+
+    public Map<String, Product> getProductsMap(){
+        return productsMap;
     }
 
     public Single<List<Product>> getProducts() {
@@ -30,7 +38,9 @@ public class ProductRepository {
                 .subscribeOn(Schedulers.io())
                 .map(productResponses -> {
                     ProductMapper mapper = new ProductMapper();
-                    return mapper.parseResponseList(productResponses);
+                    List<Product> products =  mapper.parseResponseList(productResponses);
+                    fillMap(products);
+                    return products;
                 }).onErrorResumeNext(throwable -> {
                     if (throwable instanceof HttpException && ((HttpException) throwable).code() == HTTP_VALIDATION_FAILED) {
                         Crashlytics.log("VALIDATION EXCEPTION during getProduct: " + throwable.getMessage());
@@ -40,5 +50,11 @@ public class ProductRepository {
                     }
                     return Single.error(throwable);
                 });
+    }
+
+    private void fillMap(List<Product> products) {
+        for(Product product : products){
+            productsMap.put(product.getId(), product);
+        }
     }
 }

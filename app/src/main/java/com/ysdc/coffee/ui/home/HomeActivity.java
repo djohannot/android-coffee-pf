@@ -114,12 +114,14 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
             curTabId = position;
             switch (curTabId) {
                 case TAB_BAR:
+                    barFragment.updateContent();
                     setMenuDisplayer(barFragment);
                     break;
                 case TAB_ORDER:
                     setMenuDisplayer(orderFragment);
                     break;
                 case TAB_HISTORY:
+                    historyFragment.updateContent();
                     setMenuDisplayer(historyFragment);
                     break;
                 default:

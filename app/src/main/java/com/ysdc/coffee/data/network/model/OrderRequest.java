@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OrderRequest {
-    @SerializedName("destination_id")
+    @SerializedName("destinationId")
     private String destinationId;
     @SerializedName("items")
     private List<Item> items;

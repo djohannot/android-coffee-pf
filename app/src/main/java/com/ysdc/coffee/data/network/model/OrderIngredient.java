@@ -4,7 +4,7 @@ package com.ysdc.coffee.data.network.model;
 import com.google.gson.annotations.SerializedName;
 
 public class OrderIngredient {
-    @SerializedName("ingredient_id")
+    @SerializedName("id")
     private String productId;
     @SerializedName("quantity")
     private Integer quantity;

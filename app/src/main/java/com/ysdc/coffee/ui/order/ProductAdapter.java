@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.ysdc.coffee.R;
+import com.ysdc.coffee.data.model.OrderEntry;
 import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.injection.module.GlideApp;
@@ -36,7 +37,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         void onProductClicked(Product product);
     }
 
-    public ProductAdapter(List<Product> products, List<OrderedProduct> orders, OnProductClickListener listener, Context context) {
+    public ProductAdapter(List<Product> products, List<OrderEntry> orders, OnProductClickListener listener, Context context) {
         this.products = products;
         this.listener = listener;
         this.context = context;
@@ -47,9 +48,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.products = products;
     }
 
-    public void updateProductsQuantities(List<OrderedProduct> orders) {
+    public void updateProductsQuantities(List<OrderEntry> orders) {
         productsQuantity = new HashMap<>();
-        for (OrderedProduct order : orders) {
+        for (OrderEntry order : orders) {
             Integer quantity = productsQuantity.get(order.getProduct().getId());
             if (quantity != null) {
                 productsQuantity.put(order.getProduct().getId(), quantity + INCREMENT);

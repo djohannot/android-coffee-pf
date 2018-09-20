@@ -1,6 +1,7 @@
 package com.ysdc.coffee.ui.order;
 
 import com.ysdc.coffee.data.model.Order;
+import com.ysdc.coffee.data.model.OrderEntry;
 import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.ui.base.MvpPresenter;
@@ -18,9 +19,9 @@ public interface OrderMvpPresenter<V extends OrderMvpView> extends MvpPresenter<
 
     Single<List<Product>> getProducts();
 
-    List<OrderedProduct> getOrderedProducts();
+    List<OrderEntry> getOrderEntries();
 
-    OrderedProduct getOrderedProductForProduct(Product product);
+    OrderEntry getOrderEntriesForProduct(Product product);
 
     Completable sendOrder();
 

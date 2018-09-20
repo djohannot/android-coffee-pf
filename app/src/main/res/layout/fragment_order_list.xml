@@ -33,7 +33,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="normal"
-                android:text="@string/title_order" />
+                android:text="@string/title_order_long" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -56,7 +56,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="24dp"
                 android:maxLines="2"
-                android:text="@string/title_order"
+                android:text="@string/title_order_long"
                 android:textColor="@color/white"
                 android:textSize="32dp"
                 android:textStyle="bold" />

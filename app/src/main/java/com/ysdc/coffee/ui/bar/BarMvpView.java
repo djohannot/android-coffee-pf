@@ -8,4 +8,5 @@ import com.ysdc.coffee.ui.base.MvpView;
 
 public interface BarMvpView extends MvpView {
 
+    void updateBar(boolean barOpen);
 }

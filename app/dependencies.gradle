@@ -126,7 +126,7 @@ ext {
 //        photoview : "com.github.chrisbanes:PhotoView:$versions.photoview",
 //        carousel  : "com.github.Vatican-Cameos:CarouselPicker:$versions.carousel",
 //        badgetab  : "com.github.rahimlis:badgedtablayout:$versions.badgetab",
-//        prettyTime: "org.ocpsoft.prettytime:prettytime:$versions.prettytime",
+        prettyTime: "org.ocpsoft.prettytime:prettytime:$versions.prettytime",
 //        pager     : "com.romandanylyk:pageindicatorview:$versions.pageIndicator",
             shimmer    : "com.facebook.shimmer:shimmer:$versions.shimmer"
     ]

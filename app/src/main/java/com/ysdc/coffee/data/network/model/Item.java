@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Item {
-    @SerializedName("coffee_id")
+    @SerializedName("id")
     private String id;
     @SerializedName("name")
     private String name;
     @SerializedName("size")
     private Integer size;
+    @SerializedName("sugar")
+    private Integer sugarQuantity;
     @SerializedName("take_away")
     private boolean takeaway;
     @SerializedName("description")
@@ -55,6 +57,10 @@ public class Item {
 
     public String getNote() {
         return note;
+    }
+
+    public Integer getSugarQuantity() {
+        return sugarQuantity;
     }
 
     public String getImageUrl() {

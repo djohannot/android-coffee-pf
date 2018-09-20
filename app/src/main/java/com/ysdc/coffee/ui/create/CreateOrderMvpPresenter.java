@@ -3,6 +3,7 @@ package com.ysdc.coffee.ui.create;
 import android.os.Parcelable;
 
 import com.ysdc.coffee.data.model.CupSize;
+import com.ysdc.coffee.data.model.OrderEntry;
 import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.ui.base.MvpPresenter;
@@ -31,5 +32,5 @@ public interface CreateOrderMvpPresenter<V extends CreateOrderMvpView> extends M
 
     Completable addOrder();
 
-    void setOrderProduct(OrderedProduct orderProduct);
+    void setOrderEntry(OrderEntry entry);
 }

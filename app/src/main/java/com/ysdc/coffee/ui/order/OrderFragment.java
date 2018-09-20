@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ysdc.coffee.R;
-import com.ysdc.coffee.data.model.OrderedProduct;
+import com.ysdc.coffee.data.model.OrderEntry;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.ui.base.BaseFragment;
 import com.ysdc.coffee.ui.create.CreateOrderFragment;
@@ -134,7 +134,7 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
 
     private void showProducts(List<Product> products) {
         if (adapter == null) {
-            adapter = new ProductAdapter(products, presenter.getOrderedProducts(), this::showCustomizeProduct, getActivity());
+            adapter = new ProductAdapter(products, presenter.getOrderEntries(), this::showCustomizeProduct, getActivity());
             productList.setAdapter(adapter);
         } else {
             adapter.updateProducts(products);
@@ -143,11 +143,11 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
     }
 
     private void showCustomizeProduct(Product product) {
-        OrderedProduct orderedProduct = presenter.getOrderedProductForProduct(product);
+        OrderEntry orderedProduct = presenter.getOrderEntriesForProduct(product);
         CreateOrderFragment createOrderFragment = CreateOrderFragment.newInstance(new CreateOrderFragment.CreateListener() {
             @Override
             public void onAddOrderPressed() {
-                adapter.updateProductsQuantities(presenter.getOrderedProducts());
+                adapter.updateProductsQuantities(presenter.getOrderEntries());
                 adapter.notifyDataSetChanged();
                 refreshSendLayout();
             }
@@ -156,24 +156,24 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
     }
 
     private void refreshSendLayout() {
-        if(presenter.getOrderedProducts().isEmpty()){
+        if (presenter.getOrderEntries().isEmpty()) {
             send_Layout.setVisibility(View.GONE);
             headerEmpty.setVisibility(View.VISIBLE);
             headerFilled.setVisibility(View.GONE);
-        }else{
+        } else {
             send_Layout.setVisibility(View.VISIBLE);
             headerEmpty.setVisibility(View.GONE);
             headerFilled.setVisibility(View.VISIBLE);
-            quantityField.setText(String.valueOf(presenter.getOrderedProducts().size()));
+            quantityField.setText(String.valueOf(presenter.getOrderEntries().size()));
         }
     }
 
     @OnClick(R.id.send_btn)
-    public void onSendClicked(){
-        compositeDisposable.add(presenter.sendOrder().subscribe(() ->{
+    public void onSendClicked() {
+        compositeDisposable.add(presenter.sendOrder().subscribe(() -> {
             orderSent();
             presenter.cleanCurrentOrder();
-            adapter.updateProductsQuantities(presenter.getOrderedProducts());
+            adapter.updateProductsQuantities(presenter.getOrderEntries());
             adapter.notifyDataSetChanged();
             refreshSendLayout();
 

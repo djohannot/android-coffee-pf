@@ -1,9 +1,11 @@
 package com.ysdc.coffee.data.network.service;
 
+import com.ysdc.coffee.data.network.model.Configuration;
 import com.ysdc.coffee.data.network.model.NetworkOrder;
 import com.ysdc.coffee.data.network.model.OrderRequest;
 import com.ysdc.coffee.data.network.model.ProductResponse;
 import com.ysdc.coffee.data.network.model.RegisterPush;
+import com.ysdc.coffee.data.network.model.RegisterTokenResponse;
 import com.ysdc.coffee.data.network.model.UpdateOrder;
 
 import java.util.List;
@@ -16,7 +18,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 import static com.ysdc.coffee.data.network.service.BaseService.HEADER_JSON;
 
@@ -25,7 +26,8 @@ public interface CoffeeService {
 
     String ENDPOINT_COFFEE = "coffee";
     String ENDPOINT_ORDER = "order";
-    String ENDPOINT_PUSH = "registerDevice";
+    String ENDPOINT_PUSH = "subscribe";
+    String ENDPOINT_SETTINGS = "settings";
     String ENDPOINT_ORDER_STATUS = ENDPOINT_ORDER + "/{" + PARAMETER_ORDER_ID + "}";
 
     @Headers(HEADER_JSON)
@@ -46,6 +48,13 @@ public interface CoffeeService {
 
     @Headers(HEADER_JSON)
     @POST(ENDPOINT_PUSH)
-    Completable registerPushToken(@Body RegisterPush registerPush);
+    Single<RegisterTokenResponse> registerPushToken(@Body RegisterPush registerPush);
 
+    @Headers(HEADER_JSON)
+    @GET(ENDPOINT_ORDER)
+    Single<List<NetworkOrder>> getOrders();
+
+    @Headers(HEADER_JSON)
+    @GET(ENDPOINT_SETTINGS)
+    Single<Configuration> getSettings();
 }

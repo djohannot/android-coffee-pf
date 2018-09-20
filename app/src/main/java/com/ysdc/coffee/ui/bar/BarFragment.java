@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,8 @@ public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplay
 
     private Integer menuId;
 
+    @BindView(R.id.bar_status_img)
+    ImageView barImg;
     @BindView(R.id.layout_close)
     protected RelativeLayout closeLayout;
     @BindView(R.id.layout_open)
@@ -53,7 +56,7 @@ public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplay
 
     @Override
     protected void setUp(View view) {
-        updateView();
+        updateContent();
     }
 
     @Override
@@ -88,7 +91,20 @@ public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplay
         }
     }
 
-    public void updateView(){
+    public void updateContent() {
+        presenter.updateContent();
+    }
 
+    @Override
+    public void updateBar(boolean barOpen) {
+        if (barOpen) {
+            barImg.setImageDrawable(getResources().getDrawable(R.drawable.illustration_opened));
+            openLayout.setVisibility(View.VISIBLE);
+            closeLayout.setVisibility(View.GONE);
+        } else {
+            barImg.setImageDrawable(getResources().getDrawable(R.drawable.illustration_closed));
+            openLayout.setVisibility(View.GONE);
+            closeLayout.setVisibility(View.VISIBLE);
+        }
     }
 }
