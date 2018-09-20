@@ -1,0 +1,69 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
+        <item name="android:windowAnimationStyle">@style/AppTheme.Animation</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:colorControlActivated">@color/colorAccent</item>
+        <item name="android:progressTint">@color/colorAccent</item>
+        <item name="android:progressBackgroundTint">@color/colorPrimary</item>
+        <item name="android:actionMenuTextColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+    </style>
+
+    <style name="AppTheme.Animation" parent="android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/close_exit</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.MainButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/main_button_height</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">@dimen/style_medium_padding</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_marginTop">@dimen/main_button_margin</item>
+        <item name="android:layout_marginBottom">@dimen/main_button_margin</item>
+        <item name="android:textSize">@dimen/main_button_text_size</item>
+    </style>
+
+    <style name="AppTheme.MainButton_theme" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppTheme.Solid" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppTheme.checkbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="yellow_theme">
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
+    </style>
+</resources>

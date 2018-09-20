@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/customize_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="@dimen/empty"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/customize_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        card_view:cardElevation="@dimen/elevation_high">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/product_customize_close_btn_pad_left"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_close_black" />
+
+            <TextView
+                android:id="@+id/property_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/product_customize_close_btn_pad_left"
+                android:layout_toRightOf="@id/btn_close"
+                android:fontFamily="@font/caviar_dreams_bold"
+                android:paddingTop="@dimen/product_customize_title_pad_top"
+                android:text="@string/product_customize_title"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/product_customize_title"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/customize_header"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/general_margin_vertical"
+            android:layout_marginRight="@dimen/general_margin_vertical"
+            android:layout_marginTop="@dimen/customize_layout_margin_top">
+
+            <TextView
+                android:id="@+id/title_cup_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/caviar_dreams_bold"
+                android:text="@string/customize_size"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/customize_add_size" />
+
+            <LinearLayout
+                android:id="@+id/facts_item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_cup_size"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:layout_width="18dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/cup_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/customize_size_img_bottom_margin"
+                        android:fontFamily="@font/caviar_dreams"
+                        android:maxLines="1"
+                        android:text="@string/cup_size_small"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/customize_size_font_size" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/property_bed_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:layout_width="27dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/cup_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/customize_size_img_bottom_margin"
+                        android:fontFamily="@font/caviar_dreams"
+                        android:maxLines="1"
+                        android:text="@string/cup_size_medium"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/customize_size_font_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/property_bath_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="36sp"
+                        android:layout_height="40sp"
+                        android:src="@drawable/cup_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/customize_size_img_bottom_margin"
+                        android:fontFamily="@font/caviar_dreams"
+                        android:maxLines="1"
+                        android:text="@string/cup_size_large"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/customize_size_font_size" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/cup_size_selection_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/facts_item_layout"
+                android:text="@string/select_cup_size"
+                android:textColor="@color/selection"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/title_topping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cup_size_selection_error"
+                android:layout_marginTop="@dimen/customize_layout_margin_top"
+                android:fontFamily="@font/caviar_dreams_bold"
+                android:text="@string/costumize_topping"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/customize_add_size" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/topping_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_topping">
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/left_guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".5" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/topping_vanilla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:paddingLeft="@dimen/checkbox_text_space"
+                    android:text="@string/topping_vanilla"
+                    android:textColor="@color/colorPrimaryDark"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/topping_cinnamon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:paddingLeft="@dimen/checkbox_text_space"
+                    android:text="@string/topping_cinnamon"
+                    android:textColor="@color/colorPrimaryDark"
+                    app:layout_constraintLeft_toLeftOf="@id/left_guideline" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/topping_toffeenut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:paddingLeft="@dimen/checkbox_text_space"
+                    android:text="@string/topping_toffeenut"
+                    android:textColor="@color/colorPrimaryDark"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/topping_vanilla" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/topping_hazelnut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:paddingLeft="@dimen/checkbox_text_space"
+                    android:text="@string/topping_hazelnut"
+                    android:textColor="@color/colorPrimaryDark"
+                    app:layout_constraintLeft_toLeftOf="@id/left_guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/topping_cinnamon" />
+            </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/title_others"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/topping_layout"
+                android:layout_marginTop="@dimen/customize_layout_margin_top"
+                android:fontFamily="@font/caviar_dreams_bold"
+                android:text="@string/costumize_others"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/customize_add_size" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/customize_takeaway"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_others"
+                android:fontFamily="@font/caviar_dreams"
+                android:paddingLeft="@dimen/checkbox_text_space"
+                android:text="@string/take_away"
+                android:textColor="@color/colorPrimaryDark" />
+
+
+            <TextView
+                android:id="@+id/customize_note_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/customize_takeaway"
+                android:layout_marginTop="@dimen/customize_layout_margin_top"
+                android:fontFamily="@font/caviar_dreams_bold"
+                android:text="@string/customize_note_title"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/customize_add_size" />
+
+            <LinearLayout
+                android:id="@+id/note_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/customize_note_layout_height"
+                android:layout_marginTop="@dimen/customize_note_layout_margin_top"
+                android:layout_below="@id/customize_note_title"
+                android:background="@drawable/shape_round_corner_text">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/customize_note_font"
+                    android:maxLength="120"
+                    android:maxLines="3"
+                    tools:text="this ad da sd as d da da da d ad ad asd as d ad asd a da d ad ad a da das da da da da da d a da da da da da d asd as da"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_add"
+                style="@style/AppTheme.MainButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/product_customize_margin_h"
+                android:layout_marginLeft="@dimen/general_margin_vertical"
+                android:layout_marginRight="@dimen/general_margin_vertical"
+                android:layout_marginTop="@dimen/product_customize_margin_h"
+                android:background="@drawable/shape_round_corner_button"
+                android:fontFamily="@font/caviar_dreams_bold"
+                android:text="@string/action_add_order"
+                android:textColor="@color/white"
+                android:textSize="@dimen/customize_add_size"
+                android:theme="@style/AppTheme.MainButton_theme"
+                android:layout_below="@+id/note_layout"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Coffee Provider</string>
+
+
+    <!--EXCEPTIONS & ERRORS-->
+    <string name="exception_not_logged">Your credentials have expired, please sign in again from the profile view.</string>
+    <string name="exception_no_connectivity">No internet connection, please try again later.</string>
+    <string name="exception_undefined">Service unavailable. Please try again later.</string>
+    <string name="error_update_notification_settings">please check your settings and try again.</string>
+    <string name="error_google_connection">Google Service unavailable. Please try again later.</string>
+    <string name="bar_closed">The coffee bar is actually close.\n\nWe will inform you as soon as it opens.</string>
+
+    <!--Home screen-->
+    <string name="home_person_queue">in the queue</string>
+    <string name="no_order_welcome">Welcome to the coffee bar!</string>
+    <string name="no_order_message">Order now and we will inform you when it’s ready.</string>
+    <string name="coffee_current_status">Your order is</string>
+    <string name="coffee_ready">Your order is ready!</string>
+    <string name="coffee_ready_token">Use this token to get your coffee.</string>
+    <string name="action_got_it">Got it!</string>
+    <string name="product_customize_title">Customize</string>
+    <string name="action_add_order">Add to order</string>
+    <string name="customize_size">Cup Size</string>
+    <string name="cup_size_small">Small</string>
+    <string name="cup_size_medium">Medium</string>
+    <string name="cup_size_large">Large</string>
+    <string name="select_cup_size">Please select a cup size in order to continue</string>
+    <string name="costumize_topping">Toppings</string>
+    <string name="topping_vanilla">Vanilla</string>
+    <string name="topping_cinnamon">Cinnamon</string>
+    <string name="topping_toffeenut">Toffeenut</string>
+    <string name="topping_hazelnut">Hazelnut</string>
+    <string name="costumize_others">Others</string>
+    <string name="take_away">Take Away</string>
+    <string name="login_desc">Please signin using your Property Finder account.</string>
+    <string name="login_error">Error, please use your Property Finder account. If problem persist contact us.</string>
+    <string name="customize_note_title">Note</string>
+    <plurals name="person">
+        <item quantity="zero">Nobody</item>
+        <item quantity="one">%d person</item>
+        <item quantity="other">%d persons</item>
+    </plurals>
+
+</resources>

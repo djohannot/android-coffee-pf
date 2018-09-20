@@ -1,0 +1,64 @@
+<resources>
+
+    <!--SHARED-->
+    <dimen name="empty">0dp</dimen>
+    <dimen name="general_margin_vertical">16dp</dimen>
+    <dimen name="font_size_details">13sp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="elevation_high">6dp</dimen>
+
+    <dimen name="style_minor_padding">2dp</dimen>
+    <dimen name="style_tiny_padding">4dp</dimen>
+    <dimen name="style_small_padding">8dp</dimen>
+    <dimen name="style_medium_padding">16dp</dimen>
+    <dimen name="style_large_padding">24dp</dimen>
+
+    <!--MAIN BUTTON-->
+    <dimen name="main_button_margin">7dp</dimen>
+    <dimen name="main_button_height">52dp</dimen>
+    <dimen name="main_button_text_size">14sp</dimen>
+    <dimen name="power_by_margin_bottom">40dp</dimen>
+    <dimen name="empty_mail_list_picture_top">97dp</dimen>
+
+    <!--splash screen-->
+    <dimen name="splash_logo_size">200dp</dimen>
+    <dimen name="splash_title_font_size">25sp</dimen>
+    <dimen name="splash_title_top_margin">36dp</dimen>
+    <dimen name="google_margin_vertical">32dp</dimen>
+    <dimen name="splash_desc_font_size">16sp</dimen>
+
+    <!--home screen-->
+    <dimen name="home_font_desc">22sp</dimen>
+    <dimen name="home_margin_vertical">25dp</dimen>
+    <dimen name="home_person_space">5dp</dimen>
+    <dimen name="home_no_order_vertical_margin">30dp</dimen>
+    <dimen name="home_steps_top_margin">20dp</dimen>
+    <dimen name="home_progress_top_margin">20dp</dimen>
+    <dimen name="home_image_width">200dp</dimen>
+    <dimen name="home_image_height">190dp</dimen>
+    <dimen name="call_leads_cell_space_vertical">4dp</dimen>
+    <dimen name="call_leads_cell_space_horizontal">8dp</dimen>
+    <dimen name="product_cell_title_font">16sp</dimen>
+    <dimen name="product_cell_desc_font">12sp</dimen>
+    <dimen name="product_cell_text_margin_left">10dp</dimen>
+    <dimen name="product_image_size">50dp</dimen>
+    <dimen name="product_image_left_margin">10dp</dimen>
+    <dimen name="product_cell_height">70dp</dimen>
+
+    <!--Customize view-->
+    <dimen name="product_customize_close_btn_pad_left">16dp</dimen>
+    <dimen name="product_customize_title_pad_top">2dp</dimen>
+    <dimen name="product_customize_title">18sp</dimen>
+    <dimen name="product_customize_margin_h">12dp</dimen>
+    <dimen name="customize_add_size">18sp</dimen>
+    <dimen name="customize_layout_margin_top">10dp</dimen>
+    <dimen name="customize_size_img_bottom_margin">9dp</dimen>
+    <dimen name="customize_size_font_size">12sp</dimen>
+    <dimen name="checkbox_text_space">10dp</dimen>
+    <dimen name="splash_google_top_margin">16dp</dimen>
+    <dimen name="splash_error_margin">10dp</dimen>
+    <dimen name="customize_note_font">14sp</dimen>
+    <dimen name="customize_note_layout_height">65dp</dimen>
+    <dimen name="customize_note_layout_margin_top">5dp</dimen>
+
+</resources>
