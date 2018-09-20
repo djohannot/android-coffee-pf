@@ -18,4 +18,6 @@ public interface OrderMvpPresenter<V extends OrderMvpView> extends MvpPresenter<
     Single<List<Product>> getProducts();
 
     List<OrderedProduct> getOrderedProducts();
+
+    OrderedProduct getOrderedProductForProduct(Product product);
 }

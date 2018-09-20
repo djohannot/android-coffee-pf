@@ -1,6 +1,11 @@
 package com.ysdc.coffee.data.model;
 
-public class Product {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.Objects;
+
+public class Product implements Parcelable {
     private final String id;
     private final String name;
     private final String description;
@@ -62,5 +67,54 @@ public class Product {
         public Product build() {
             return new Product(id, name, description, imageUrl);
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeString(this.imageUrl);
+    }
+
+    protected Product(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.imageUrl = in.readString();
+    }
+
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel source) {
+            return new Product(source);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(imageUrl, product.imageUrl);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, description, imageUrl);
     }
 }

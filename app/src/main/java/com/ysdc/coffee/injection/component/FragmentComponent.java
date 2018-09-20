@@ -3,6 +3,7 @@ package com.ysdc.coffee.injection.component;
 import com.ysdc.coffee.injection.annotations.FragmentScope;
 import com.ysdc.coffee.injection.module.FragmentModule;
 import com.ysdc.coffee.ui.bar.BarFragment;
+import com.ysdc.coffee.ui.create.CreateOrderFragment;
 import com.ysdc.coffee.ui.history.HistoryFragment;
 import com.ysdc.coffee.ui.order.OrderFragment;
 
@@ -17,4 +18,6 @@ public interface FragmentComponent {
     void inject(HistoryFragment historyFragment);
 
     void inject(OrderFragment orderFragment);
+
+    void inject(CreateOrderFragment createOrderFragment);
 }

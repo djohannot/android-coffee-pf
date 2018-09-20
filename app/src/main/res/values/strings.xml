@@ -26,9 +26,9 @@
     <string name="cup_size_large">Large</string>
     <string name="select_cup_size">Please select a cup size in order to continue</string>
     <string name="costumize_topping">Toppings</string>
-    <string name="topping_vanilla">Vanilla</string>
+    <string name="topping_vanilla">Vanilla Flavor</string>
     <string name="topping_cinnamon">Cinnamon</string>
-    <string name="topping_toffeenut">Toffeenut</string>
+    <string name="topping_toffeenut">Toffeenut Flavor</string>
     <string name="topping_hazelnut">Hazelnut</string>
     <string name="costumize_others">Others</string>
     <string name="take_away">Take Away</string>
@@ -38,6 +38,12 @@
     <string name="title_bar">Home</string>
     <string name="title_History">History</string>
     <string name="title_order">Order</string>
+    <string name="sugar_title">Sugar</string>
+    <string name="size_title">Size</string>
+    <string name="additions_title">Additions</string>
+    <string name="topping_carmel">Carmel Flavor</string>
+    <string name="take_away_title">Take away</string>
+    <string name="order_note_title">Add note</string>
     <plurals name="person">
         <item quantity="zero">Nobody</item>
         <item quantity="one">%d person</item>

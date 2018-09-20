@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ysdc.coffee.R;
+import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.ui.base.BaseFragment;
+import com.ysdc.coffee.ui.create.CreateOrderFragment;
 import com.ysdc.coffee.ui.utils.MenuDisplayer;
 
 import java.util.List;
@@ -128,6 +130,13 @@ public class OrderFragment extends BaseFragment implements OrderMvpView, MenuDis
     }
 
     private void showCustomizeProduct(Product product) {
-        //TODO
+        OrderedProduct orderedProduct = presenter.getOrderedProductForProduct(product);
+        CreateOrderFragment createOrderFragment = CreateOrderFragment.newInstance(new CreateOrderFragment.CreateListener() {
+            @Override
+            public void onAddOrderPressed() {
+                adapter.updateProductsQuantities(presenter.getOrderedProducts());
+            }
+        }, orderedProduct);
+        createOrderFragment.show(getActivity().getSupportFragmentManager(), createOrderFragment.getTag());
     }
 }

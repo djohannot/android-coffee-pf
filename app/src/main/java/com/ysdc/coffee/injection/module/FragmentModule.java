@@ -5,12 +5,16 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import com.ysdc.coffee.data.ErrorHandler;
+import com.ysdc.coffee.data.repository.OrderRepository;
 import com.ysdc.coffee.data.repository.ProductRepository;
 import com.ysdc.coffee.injection.annotations.ActivityScope;
 import com.ysdc.coffee.injection.annotations.FragmentScope;
 import com.ysdc.coffee.ui.bar.BarMvpPresenter;
 import com.ysdc.coffee.ui.bar.BarMvpView;
 import com.ysdc.coffee.ui.bar.BarPresenter;
+import com.ysdc.coffee.ui.create.CreateOrderMvpPresenter;
+import com.ysdc.coffee.ui.create.CreateOrderMvpView;
+import com.ysdc.coffee.ui.create.CreateOrderPresenter;
 import com.ysdc.coffee.ui.history.HistoryMvpPresenter;
 import com.ysdc.coffee.ui.history.HistoryMvpView;
 import com.ysdc.coffee.ui.history.HistoryPresenter;
@@ -53,13 +57,19 @@ public class FragmentModule {
 
     @Provides
     @FragmentScope
-    OrderMvpPresenter<OrderMvpView> provideOrderPresenter(ErrorHandler errorHandler, ProductRepository productRepository) {
-        return new OrderPresenter<>(errorHandler, productRepository);
+    OrderMvpPresenter<OrderMvpView> provideOrderPresenter(ErrorHandler errorHandler, ProductRepository productRepository, OrderRepository orderRepository) {
+        return new OrderPresenter<>(errorHandler, productRepository, orderRepository);
     }
 
     @Provides
     @FragmentScope
     HistoryMvpPresenter<HistoryMvpView> provideHistoryPresenter(ErrorHandler errorHandler) {
         return new HistoryPresenter<>(errorHandler);
+    }
+
+    @Provides
+    @FragmentScope
+    CreateOrderMvpPresenter<CreateOrderMvpView> provideCreateOrderPresenter(ErrorHandler errorHandler, OrderRepository orderRepository) {
+        return new CreateOrderPresenter<>(errorHandler, orderRepository);
     }
 }
