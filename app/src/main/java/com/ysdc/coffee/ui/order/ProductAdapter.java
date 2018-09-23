@@ -16,7 +16,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.ysdc.coffee.R;
 import com.ysdc.coffee.data.model.OrderEntry;
-import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.injection.module.GlideApp;
 

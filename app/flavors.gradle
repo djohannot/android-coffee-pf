@@ -1,0 +1,20 @@
+
+android {
+    flavorDimensions "all"
+
+    productFlavors {
+
+        consumerApp {
+            resConfigs "en"
+            dimension "all"
+            buildConfigField "String", "DEFAULT_TOKEN", "\"\""
+        }
+
+        producerApp {
+            resConfigs "en"
+            dimension "all"
+            buildConfigField "String", "DEFAULT_TOKEN", "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJlbWFpbCI6ImFsdmluQHByb3BlcnR5ZmluZGVyLmFlIiwicGljdHVyZSI6IiJ9.5yHTcWYo1Y3GJC88Sba79PUwWynW9f8RZWrUyiHWDvw\""
+        }
+
+    }
+}

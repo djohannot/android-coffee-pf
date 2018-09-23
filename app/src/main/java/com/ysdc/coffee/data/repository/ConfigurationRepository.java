@@ -1,9 +1,11 @@
 package com.ysdc.coffee.data.repository;
 
 import com.ysdc.coffee.data.network.DefaultNetworkServiceCreator;
+import com.ysdc.coffee.data.network.model.Configuration;
 import com.ysdc.coffee.data.prefs.MyPreferences;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -22,9 +24,15 @@ public class ConfigurationRepository {
     public Completable refreshConfiguration() {
         return networkServiceCreator.getCoffeeService().getSettings()
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess(configuration -> {
-                    preferences.set(BAR_OPEN, configuration.isBarOpen());
-                }).ignoreElement();
+                .doOnSuccess(configuration -> preferences.set(BAR_OPEN, configuration.isBarOpen()))
+                .ignoreElement();
+    }
+
+    public Single<Boolean> updateConfiguration(Boolean isBarOpen){
+        return networkServiceCreator.getCoffeeService().updateSettings(new Configuration(isBarOpen))
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess(configuration -> preferences.set(BAR_OPEN, configuration.isBarOpen()))
+                .map(configuration -> configuration.isBarOpen());
     }
 
     public boolean isBarOpen(){

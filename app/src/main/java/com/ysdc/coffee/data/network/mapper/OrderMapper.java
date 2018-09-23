@@ -4,9 +4,11 @@ import com.ysdc.coffee.data.model.CupSize;
 import com.ysdc.coffee.data.model.Ingredient;
 import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.data.model.OrderEntry;
+import com.ysdc.coffee.data.model.OrderProducts;
 import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.data.model.User;
+import com.ysdc.coffee.data.model.UserOrder;
 import com.ysdc.coffee.data.network.model.Item;
 import com.ysdc.coffee.data.network.model.NetworkOrder;
 import com.ysdc.coffee.data.network.model.OrderIngredient;
@@ -56,7 +58,7 @@ public class OrderMapper {
             order.setStatus(networkOrder.getOrderStatus());
             order.setUser(new User(networkOrder.getUserName(), networkOrder.getImageUrl()));
             try {
-                order.setDate(simpleDateFormat.parse(networkOrder.getDate().split(".")[0]));
+                order.setDate(simpleDateFormat.parse(networkOrder.getDate().split("\\.")[0]));
             } catch (ParseException e) {
                 Timber.e(e,"oups");
             }
@@ -67,6 +69,45 @@ public class OrderMapper {
         return orders;
     }
 
+    public List<UserOrder> parseAllUsersOrders(List<NetworkOrder> networkOrders) {
+        List<UserOrder> orders = new ArrayList<>();
+
+        for (NetworkOrder networkOrder : networkOrders) {
+            UserOrder order = new UserOrder();
+            order.setId(networkOrder.getId());
+            order.setStatus(networkOrder.getOrderStatus());
+            order.setUser(new User(networkOrder.getUserName(), networkOrder.getImageUrl()));
+            try {
+                order.setDate(simpleDateFormat.parse(networkOrder.getDate().split("\\.")[0]));
+            } catch (ParseException e) {
+                Timber.e(e,"oups");
+            }
+            for (Item item : networkOrder.getItems()) {
+                order.getOrderedProductList().add(parseItem(item));
+            }
+            orders.add(order);
+        }
+        return orders;
+    }
+
+    private OrderProducts parseItem(Item item) {
+        OrderProducts entry = new OrderProducts();
+        entry.setCupSize(CupSize.fromId(item.getSize()));
+        entry.setQuantity(item.getQuantity());
+        entry.setSugarQuantity(item.getSugarQuantity());
+        entry.setTakeaway(item.isTakeaway());
+        entry.setCoffeeName(item.getCoffeeName());
+        entry.setCoffeeImageUrl(item.getCoffeeImage());
+        entry.setCoffeeId(item.getCoffeeId());
+        entry.setCoffeeImageUrl(item.getCoffeeImage());
+        entry.setNote(item.getNote());
+        if (item.hasIngredients()) {
+            for (OrderIngredient ingredient : item.getIngredients()) {
+                entry.getIngredients().add(Ingredient.fromId(ingredient.getProductId()));
+            }
+        }
+        return entry;
+    }
 
     private OrderedProduct parseItem(Item item, Order order) {
         OrderedProduct orderedProduct = new OrderedProduct(order);

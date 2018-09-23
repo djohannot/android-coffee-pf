@@ -52,8 +52,10 @@ public class PushNotificationRepository {
      *
      * @param token
      */
-    public void savePushNotificationToken(String token) {
+    public Completable savePushNotificationToken(String token) {
+        Timber.d("savePushNotificationToken called");
         appPrefs.set(PUSH_TOKEN, token);
+        return registerPushTokenOnBackend();
     }
 
     /**
@@ -63,7 +65,11 @@ public class PushNotificationRepository {
      * @return A completable event when the operation is done.
      */
     public Completable registerPushTokenOnBackend() {
+        Timber.d("registerPushTokenOnBackend called");
         return Completable.defer(() -> {
+            if(appPrefs.getAsString(PUSH_TOKEN, EMPTY_STRING).isEmpty()){
+                return Completable.complete();
+            }
             RegisterPush registerPush = new RegisterPush(appPrefs.getAsString(PUSH_TOKEN, EMPTY_STRING));
             return networkService.getCoffeeService().registerPushToken(registerPush)
                     .subscribeOn(Schedulers.io()).doOnError(throwable -> Timber.e(throwable, "ERROR")).ignoreElement();

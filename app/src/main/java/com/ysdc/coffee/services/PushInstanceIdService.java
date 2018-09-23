@@ -8,6 +8,7 @@ import com.ysdc.coffee.injection.module.ServiceModule;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 /**
@@ -19,11 +20,20 @@ public class PushInstanceIdService extends FirebaseInstanceIdService {
     @Inject
     PushNotificationRepository notificationRepository;
 
+    private CompositeDisposable compositeDisposable;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        compositeDisposable = new CompositeDisposable();
         ((MyApplication) getApplication()).getAppComponent()
                 .childServiceComponent(new ServiceModule(this)).inject(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        compositeDisposable.dispose();
+        super.onDestroy();
     }
 
     @Override
@@ -43,6 +53,6 @@ public class PushInstanceIdService extends FirebaseInstanceIdService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        notificationRepository.savePushNotificationToken(token);
+        compositeDisposable.add(notificationRepository.savePushNotificationToken(token).subscribe());
     }
 }

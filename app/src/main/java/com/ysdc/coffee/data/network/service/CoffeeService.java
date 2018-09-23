@@ -10,7 +10,6 @@ import com.ysdc.coffee.data.network.model.UpdateOrder;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -57,4 +56,8 @@ public interface CoffeeService {
     @Headers(HEADER_JSON)
     @GET(ENDPOINT_SETTINGS)
     Single<Configuration> getSettings();
+
+    @Headers(HEADER_JSON)
+    @PATCH(ENDPOINT_SETTINGS)
+    Single<Configuration> updateSettings(@Body Configuration configuration);
 }

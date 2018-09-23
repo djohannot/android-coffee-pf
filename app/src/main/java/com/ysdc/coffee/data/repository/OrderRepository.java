@@ -2,9 +2,13 @@ package com.ysdc.coffee.data.repository;
 
 import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.data.model.OrderEntry;
+import com.ysdc.coffee.data.model.OrderStatus;
 import com.ysdc.coffee.data.model.OrderedProduct;
+import com.ysdc.coffee.data.model.UserOrder;
 import com.ysdc.coffee.data.network.DefaultNetworkServiceCreator;
 import com.ysdc.coffee.data.network.mapper.OrderMapper;
+import com.ysdc.coffee.data.network.model.NetworkOrder;
+import com.ysdc.coffee.data.network.model.UpdateOrder;
 
 import java.util.List;
 
@@ -57,5 +61,20 @@ public class OrderRepository {
                     OrderMapper mapper = new OrderMapper();
                     return mapper.parseNetworkOrders(networkOrders);
                 });
+    }
+
+    public Single<List<UserOrder>> getActiveOrders(){
+        return networkServiceCreator.getCoffeeService().getOrders()
+                .subscribeOn(Schedulers.io())
+                .map(networkOrders -> {
+                    OrderMapper mapper = new OrderMapper();
+                    return mapper.parseAllUsersOrders(networkOrders);
+                });
+    }
+
+    public Completable updateOrder(String orderId, OrderStatus orderStatus) {
+        return networkServiceCreator.getCoffeeService().updateOrder(orderId, new UpdateOrder(orderStatus))
+                .subscribeOn(Schedulers.io())
+                .ignoreElement();
     }
 }

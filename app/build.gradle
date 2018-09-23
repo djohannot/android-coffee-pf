@@ -6,6 +6,7 @@ apply from: 'linter.gradle'
 apply from: 'dependencies.gradle'
 apply from: 'jacoco.gradle'
 apply from: 'signing.gradle'
+apply from: 'flavors.gradle'
 
 android {
     compileSdkVersion 28
