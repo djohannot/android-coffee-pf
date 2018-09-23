@@ -15,7 +15,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.ysdc.coffee.R;
-import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.injection.module.GlideApp;
 
@@ -31,7 +30,6 @@ import static com.ysdc.coffee.data.model.OrderStatus.PENDING;
 import static com.ysdc.coffee.data.model.OrderStatus.READY;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
-    private static final Integer INCREMENT = 1;
 
     private List<OrderedProduct> orders;
     private final OnOrdersClickListener listener;
@@ -75,22 +73,22 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 break;
             case READY:
                 holder.orderStatus.setVisibility(View.VISIBLE);
-                holder.orderStatus.setText(context.getString(R.string.order_status, context.getString(READY.getLocalizableKey())));
+                holder.orderStatus.setText("  " + context.getString(READY.getLocalizableKey()) + "  ");
                 holder.orderStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_round_corner_status_ready));
                 break;
             case CANCELED:
                 holder.orderStatus.setVisibility(View.VISIBLE);
-                holder.orderStatus.setText(context.getString(R.string.order_status, context.getString(CANCELED.getLocalizableKey())));
+                holder.orderStatus.setText("  " + context.getString(CANCELED.getLocalizableKey()) + "  ");
                 holder.orderStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_round_corner_status_canceled));
                 break;
             case PENDING:
                 holder.orderStatus.setVisibility(View.VISIBLE);
-                holder.orderStatus.setText(context.getString(R.string.order_status, context.getString(PENDING.getLocalizableKey())));
+                holder.orderStatus.setText("  " + context.getString(PENDING.getLocalizableKey()) + "  ");
                 holder.orderStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_round_corner_status_pending));
                 break;
             case IN_PROGRESS:
                 holder.orderStatus.setVisibility(View.VISIBLE);
-                holder.orderStatus.setText(context.getString(R.string.order_status, context.getString(IN_PROGRESS.getLocalizableKey())));
+                holder.orderStatus.setText("  " + context.getString(IN_PROGRESS.getLocalizableKey()) + "  ");
                 holder.orderStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_round_corner_status_pending));
             default:
                 break;

@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cell_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/customer_image"
+        android:layout_width="@dimen/product_image_size"
+        android:layout_height="@dimen/product_image_size"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/order_owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/customer_image"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/customer_image"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/dark"
+        android:textSize="@dimen/product_cell_title_font"
+        android:layout_marginBottom="10dp"
+        tools:text="David Johannot" />
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/order_owner"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/customer_image">
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/order_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/customer_image"
+        android:fontFamily="sans-serif"
+        android:maxLines="2"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:background="@drawable/shape_round_corner_button_notify"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        tools:text="Order is Pending"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/order_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/order_owner"
+        android:layout_marginRight="20dp"
+        android:fontFamily="sans-serif"
+        android:gravity="end"
+        android:textColor="#2d140d"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        tools:text="12:45 PM" />
+
+</RelativeLayout>
