@@ -11,9 +11,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.ysdc.coffee.R;
 import com.ysdc.coffee.data.model.CupSize;
+import com.ysdc.coffee.data.model.Ingredient;
 import com.ysdc.coffee.data.model.OrderEntry;
 import com.ysdc.coffee.injection.module.GlideApp;
 import com.ysdc.coffee.ui.base.BaseBottomSheetFragment;
@@ -32,7 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class CreateOrderFragment extends BaseBottomSheetFragment implements CreateOrderMvpView {
+public class CreateOrderFragment extends BaseBottomSheetFragment implements CreateOrderMvpView, CompoundButton.OnCheckedChangeListener {
 
     private static final String EXTRA_ORDER_PRODUCT = "EXTRA_ORDER_PRODUCT";
 
@@ -59,14 +62,10 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
     protected ImageButton sugar2;
     @BindView(R.id.sugar_3)
     protected ImageButton sugar3;
-    @BindView(R.id.carmel_flavor)
-    protected Switch carmel;
-    @BindView(R.id.toffeenut_flavor)
-    protected Switch toffeenut;
-    @BindView(R.id.vanilla_flavor)
-    protected Switch vanilla;
     @BindView(R.id.take_away)
     protected Switch takeaway;
+    @BindView(R.id.ingredient_content)
+    protected LinearLayout ingredientContent;
 
 
     private CompositeDisposable subscriptions;
@@ -137,16 +136,27 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
 
     @Override
     protected void setUp(View view) {
-        if (!TextUtils.isEmpty(presenter.getProduct().getImageUrl())) {
+        ingredientContent.removeAllViews();
+        for (Ingredient ingredient : presenter.getIngredients()) {
+            final View extend = LayoutInflater.from(getActivity()).inflate(R.layout.cell_ingredient, ingredientContent, false);
+            TextView textView = extend.findViewById(R.id.ingredient_name);
+            textView.setText(ingredient.getName());
+            Switch ingredientSwitch = extend.findViewById(R.id.ingredient_switch);
+            ingredientSwitch.setTag(ingredient.getId());
+            ingredientSwitch.setOnCheckedChangeListener(this);
+            ingredientSwitch.setChecked(presenter.getSwitchValueForIngredient(ingredient));
+            ingredientContent.addView(extend);
+        }
+        if (!TextUtils.isEmpty(presenter.getOrderEntry().getCoffeeImageUrl())) {
             GlideApp.with(getActivity())
-                    .load(presenter.getProduct().getImageUrl())
+                    .load(presenter.getOrderEntry().getCoffeeImageUrl())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(productImage);
         }
-        productName.setText(presenter.getProduct().getName());
+        productName.setText(presenter.getOrderEntry().getCoffeeName());
         productQuantity.setText(String.valueOf(presenter.getOrderEntry().getQuantity()));
-        switch (presenter.getOrderEntry().getSugarQuantity()){
+        switch (presenter.getOrderEntry().getSugarQuantity()) {
             case 1:
                 sugar1.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sugar_1_selected));
                 break;
@@ -160,7 +170,11 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
                 sugar0.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sugar_0_selected));
                 break;
         }
+    }
 
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        presenter.ingredientModified(compoundButton.getTag().toString(), isChecked);
     }
 
     @OnClick(R.id.back_button)
@@ -245,10 +259,6 @@ public class CreateOrderFragment extends BaseBottomSheetFragment implements Crea
 
     @OnClick(R.id.btn_order)
     public void addOrderPressed() {
-
-        presenter.carmelSelected(carmel.isChecked());
-        presenter.toffeenutSelected(toffeenut.isChecked());
-        presenter.vanillaSelected(vanilla.isChecked());
         presenter.isTakeAway(takeaway.isChecked());
         subscriptions.add(
                 presenter.addOrder().subscribe(() -> {

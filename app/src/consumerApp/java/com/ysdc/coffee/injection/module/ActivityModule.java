@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ysdc.coffee.data.ErrorHandler;
 import com.ysdc.coffee.data.repository.ConfigurationRepository;
+import com.ysdc.coffee.data.repository.ProductRepository;
 import com.ysdc.coffee.data.repository.PushNotificationRepository;
 import com.ysdc.coffee.data.repository.UserRepository;
 import com.ysdc.coffee.injection.annotations.ActivityContext;
@@ -41,7 +42,8 @@ public class ActivityModule {
     }
     @Provides
     @ActivityScope
-    HomeMvpPresenter<HomeMvpView> provideHomePresenter(ErrorHandler errorHandler, PushNotificationRepository pushNotificationRepository, ConfigurationRepository configurationRepository) {
-        return new HomePresenter<>(errorHandler, pushNotificationRepository, configurationRepository);
+    HomeMvpPresenter<HomeMvpView> provideHomePresenter(ErrorHandler errorHandler, PushNotificationRepository pushNotificationRepository,
+                                                       ConfigurationRepository configurationRepository, ProductRepository productRepository) {
+        return new HomePresenter<>(errorHandler, pushNotificationRepository, configurationRepository, productRepository);
     }
 }

@@ -4,10 +4,11 @@ import com.ysdc.coffee.data.ErrorHandler;
 import com.ysdc.coffee.data.model.CupSize;
 import com.ysdc.coffee.data.model.Ingredient;
 import com.ysdc.coffee.data.model.OrderEntry;
-import com.ysdc.coffee.data.model.OrderedProduct;
-import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.data.repository.OrderRepository;
+import com.ysdc.coffee.data.repository.ProductRepository;
 import com.ysdc.coffee.ui.base.BasePresenter;
+
+import java.util.List;
 
 import io.reactivex.Completable;
 
@@ -15,16 +16,17 @@ public class CreateOrderPresenter<V extends CreateOrderMvpView> extends BasePres
 
     private OrderEntry entry;
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
-    public CreateOrderPresenter(ErrorHandler errorHandler, OrderRepository orderRepository) {
+    public CreateOrderPresenter(ErrorHandler errorHandler, OrderRepository orderRepository, ProductRepository productRepository) {
         super(errorHandler);
         this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
     public void onAttach(V mvpView) {
         super.onAttach(mvpView);
-        load();
     }
 
     @Override
@@ -32,29 +34,20 @@ public class CreateOrderPresenter<V extends CreateOrderMvpView> extends BasePres
         super.onDetach();
     }
 
-
-    private void load() {
-    }
-
     @Override
-    public OrderEntry getOrderEntry(){
+    public OrderEntry getOrderEntry() {
         return entry;
     }
 
     @Override
-    public Product getProduct() {
-        return entry.getProduct();
-    }
-
-    @Override
     public void incrementQuantity() {
-        entry.setQuantity(entry.getQuantity()+1);
+        entry.setQuantity(entry.getQuantity() + 1);
         getMvpView().updateQuantity(entry.getQuantity());
     }
 
     @Override
     public void decrementQuantity() {
-        if(entry.getQuantity()>0) {
+        if (entry.getQuantity() > 0) {
             entry.setQuantity(entry.getQuantity() - 1);
             getMvpView().updateQuantity(entry.getQuantity());
         }
@@ -71,29 +64,11 @@ public class CreateOrderPresenter<V extends CreateOrderMvpView> extends BasePres
     }
 
     @Override
-    public void carmelSelected(boolean selected) {
-        if (selected){
-            entry.getIngredients().add(Ingredient.CARMEL);
-        }else{
-            entry.getIngredients().remove(Ingredient.CARMEL);
-        }
-    }
-
-    @Override
-    public void toffeenutSelected(boolean selected) {
-        if (selected){
-            entry.getIngredients().add(Ingredient.TOFFEENUT);
-        }else{
-            entry.getIngredients().remove(Ingredient.TOFFEENUT);
-        }
-    }
-
-    @Override
-    public void vanillaSelected(boolean selected) {
-        if (selected){
-            entry.getIngredients().add(Ingredient.VANILLA);
-        }else{
-            entry.getIngredients().remove(Ingredient.VANILLA);
+    public void ingredientModified(String ingredientId, boolean selected) {
+        if (selected) {
+            entry.getIngredients().add(new Ingredient(ingredientId));
+        } else {
+            entry.getIngredients().remove(new Ingredient(ingredientId));
         }
     }
 
@@ -113,5 +88,15 @@ public class CreateOrderPresenter<V extends CreateOrderMvpView> extends BasePres
     @Override
     public void setOrderEntry(OrderEntry entry) {
         this.entry = entry;
+    }
+
+    @Override
+    public List<Ingredient> getIngredients() {
+        return productRepository.getIngredients();
+    }
+
+    @Override
+    public boolean getSwitchValueForIngredient(Ingredient ingredient) {
+        return entry.getIngredients().contains(ingredient);
     }
 }

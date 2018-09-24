@@ -1,8 +1,7 @@
 package com.ysdc.coffee.ui.history;
 
 import com.ysdc.coffee.data.ErrorHandler;
-import com.ysdc.coffee.data.model.OrderEntry;
-import com.ysdc.coffee.data.model.OrderedProduct;
+import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.data.repository.OrderRepository;
 import com.ysdc.coffee.data.repository.ProductRepository;
 import com.ysdc.coffee.ui.base.BasePresenter;
@@ -29,7 +28,7 @@ public class HistoryPresenter<V extends HistoryMvpView> extends BasePresenter<V>
     }
 
     @Override
-    public Single<List<OrderedProduct>> getOrderedProduct() {
+    public Single<List<Order>> getOrderedProduct() {
         return Single.defer(() -> {
             if (productRepository.getProductsMap().isEmpty()) {
                 return Single.just(new ArrayList<>());
@@ -37,9 +36,10 @@ public class HistoryPresenter<V extends HistoryMvpView> extends BasePresenter<V>
             return orderRepository.getUserOrders().subscribeOn(Schedulers.io());
         });
     }
+
     @Override
-    public void addOrder(OrderedProduct orderedProduct){
-        orderRepository.addProductToOrder(new OrderEntry(productRepository.getProductsMap().get(orderedProduct.getCoffeeId())));
+    public void mergeWithCurrentOrder(Order order) {
+        orderRepository.mergeWithCurrentOrder(order);
     }
 
 }

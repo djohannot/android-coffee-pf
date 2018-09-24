@@ -1,6 +1,6 @@
 package com.ysdc.coffee.ui.history;
 
-import com.ysdc.coffee.data.model.OrderedProduct;
+import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.ui.base.MvpPresenter;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import io.reactivex.Single;
 
 public interface HistoryMvpPresenter<V extends HistoryMvpView> extends MvpPresenter<V> {
 
-    Single<List<OrderedProduct>> getOrderedProduct();
+    Single<List<Order>> getOrderedProduct();
 
-    void addOrder(OrderedProduct orderedProduct);
+    void mergeWithCurrentOrder(Order orderedProduct);
 }

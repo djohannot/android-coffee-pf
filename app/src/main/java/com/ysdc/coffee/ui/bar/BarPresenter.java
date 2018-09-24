@@ -14,12 +14,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class BarPresenter<V extends BarMvpView> extends BasePresenter<V> implements BarMvpPresenter<V> {
 
     private final ConfigurationRepository configurationRepository;
-    private final MyPreferences preferences;
 
-    public BarPresenter(ErrorHandler errorHandler, ConfigurationRepository configurationRepository, MyPreferences preferences) {
+    public BarPresenter(ErrorHandler errorHandler, ConfigurationRepository configurationRepository) {
         super(errorHandler);
         this.configurationRepository = configurationRepository;
-        this.preferences = preferences;
     }
 
     @Override

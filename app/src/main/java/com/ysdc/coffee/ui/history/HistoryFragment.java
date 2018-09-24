@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ysdc.coffee.R;
-import com.ysdc.coffee.data.model.OrderedProduct;
+import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.ui.base.BaseFragment;
 import com.ysdc.coffee.ui.utils.MenuDisplayer;
 
@@ -109,7 +109,7 @@ public class HistoryFragment extends BaseFragment implements HistoryMvpView, Men
         }
     }
 
-    private void showOrders(List<OrderedProduct> products) {
+    private void showOrders(List<Order> products) {
         if (adapter == null) {
             adapter = new OrderAdapter(products, this::showDialog, getActivity());
             ordersList.setAdapter(adapter);
@@ -119,8 +119,8 @@ public class HistoryFragment extends BaseFragment implements HistoryMvpView, Men
         adapter.notifyDataSetChanged();
     }
 
-    private void showDialog(OrderedProduct orderedProduct) {
-        presenter.addOrder(orderedProduct);
+    private void showDialog(Order order) {
+        presenter.mergeWithCurrentOrder(order);
     }
 
     @Override
@@ -131,7 +131,7 @@ public class HistoryFragment extends BaseFragment implements HistoryMvpView, Men
         }
     }
 
-    public void updateContent(){
+    public void updateContent() {
         loadOrders();
     }
 }

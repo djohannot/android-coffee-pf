@@ -23,13 +23,11 @@ public class PushNotificationRepository {
 
     private final MyPreferences appPrefs;
     private final DefaultNetworkServiceCreator networkService;
-    private final ConfigurationRepository configurationRepository;
     private PublishSubject<RemoteMessage> notificationSubject = PublishSubject.create();
 
-    public PushNotificationRepository(MyPreferences appPrefs, DefaultNetworkServiceCreator networkService, ConfigurationRepository configurationRepository) {
+    public PushNotificationRepository(MyPreferences appPrefs, DefaultNetworkServiceCreator networkService) {
         this.appPrefs = appPrefs;
         this.networkService = networkService;
-        this.configurationRepository = configurationRepository;
     }
 
     /**

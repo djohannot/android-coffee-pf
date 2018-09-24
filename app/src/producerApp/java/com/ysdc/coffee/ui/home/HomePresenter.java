@@ -18,14 +18,16 @@ public class HomePresenter<V extends HomeMvpView> extends BasePresenter<V> imple
 
     private final PushNotificationRepository pushNotificationRepository;
     private final ConfigurationRepository configurationRepository;
+    private final ProductRepository productRepository;
     private final MyPreferences preferences;
 
     public HomePresenter(ErrorHandler errorHandler, PushNotificationRepository pushNotificationRepository, ConfigurationRepository configurationRepository,
-                         MyPreferences preferences) {
+                         MyPreferences preferences, ProductRepository productRepository) {
         super(errorHandler);
         this.preferences = preferences;
         this.configurationRepository = configurationRepository;
         this.pushNotificationRepository = pushNotificationRepository;
+        this.productRepository = productRepository;
         updateContent();
     }
 
@@ -33,7 +35,10 @@ public class HomePresenter<V extends HomeMvpView> extends BasePresenter<V> imple
         preferences.set(USER_TOKEN, BuildConfig.DEFAULT_TOKEN);
         getCompositeDisposable().add(pushNotificationRepository.registerPushTokenOnBackend()
                 .andThen(configurationRepository.refreshConfiguration())
+                .andThen(configurationRepository.retrieveDestinations())
+                .andThen(productRepository.retrieveIngredients())
                 .onErrorComplete()
+                .doFinally(() -> getMvpView().hideProgress())
                 .subscribe());
     }
 }

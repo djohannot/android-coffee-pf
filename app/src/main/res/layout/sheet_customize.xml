@@ -237,6 +237,7 @@
                     android:textSize="18sp" />
 
                 <LinearLayout
+                    android:id="@+id/ingredient_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/additions_title"
@@ -245,68 +246,6 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="30dp"
                     android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:text="@string/topping_carmel"
-                            android:textColor="@color/dark"
-                            android:textSize="16sp" />
-
-                        <Switch
-                            android:id="@+id/carmel_flavor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:theme="@style/MySwitch" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:text="@string/topping_toffeenut"
-                            android:textColor="@color/dark"
-                            android:textSize="16sp" />
-
-                        <Switch
-                            android:id="@+id/toffeenut_flavor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:theme="@style/MySwitch" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:text="@string/topping_vanilla"
-                            android:textColor="@color/dark"
-                            android:textSize="16sp" />
-
-                        <Switch
-                            android:id="@+id/vanilla_flavor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:theme="@style/MySwitch" />
-                    </RelativeLayout>
                 </LinearLayout>
 
                 <View

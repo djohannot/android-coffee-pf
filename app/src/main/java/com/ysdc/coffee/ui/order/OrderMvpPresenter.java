@@ -1,8 +1,6 @@
 package com.ysdc.coffee.ui.order;
 
-import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.data.model.OrderEntry;
-import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.ui.base.MvpPresenter;
 

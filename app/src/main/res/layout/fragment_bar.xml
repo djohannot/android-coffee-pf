@@ -5,11 +5,23 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:elevation="1dp"
+        android:indeterminateDrawable="@drawable/progress"
+        android:visibility="visible" />
+
     <ImageView
         android:id="@+id/bar_status_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/illustration_closed" />
+        android:src="@drawable/illustration_closed"
+        android:visibility="gone" />
 
 
     <RelativeLayout
@@ -18,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bar_status_img"
         android:layout_marginTop="20dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:layout_width="272dp"
@@ -26,10 +38,10 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:lineSpacingExtra="9sp"
+            android:text="@string/bar_close_message"
             android:textColor="#8c746a"
             android:textSize="18sp"
-            android:textStyle="normal"
-            android:text="@string/bar_close_message" />
+            android:textStyle="normal" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -46,11 +58,11 @@
             android:layout_height="56dp"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
+            android:text="@string/no_order_welcome"
             android:textAlignment="center"
             android:textColor="#333333"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:text="@string/no_order_welcome" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/queue_layout"
@@ -61,8 +73,8 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/shape_round_corner_welcom"
             android:gravity="center"
-            android:visibility="gone"
-            android:padding="@dimen/empty">
+            android:padding="@dimen/empty"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/status_queue"
@@ -85,9 +97,9 @@
             android:fontFamily="sans-serif"
             android:gravity="center_horizontal"
             android:lineSpacingExtra="6sp"
+            android:text="@string/no_order_message"
             android:textColor="#8c746a"
             android:textSize="12sp"
-            android:textStyle="normal"
-            android:text="@string/no_order_message" />
+            android:textStyle="normal" />
     </RelativeLayout>
 </RelativeLayout>

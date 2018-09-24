@@ -12,7 +12,6 @@ import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 import com.ysdc.coffee.BuildConfig;
-import com.tspoon.traceur.Traceur;
 import com.ysdc.coffee.injection.component.AppComponent;
 import com.ysdc.coffee.injection.component.DaggerAppComponent;
 import com.ysdc.coffee.injection.module.AppModule;
@@ -58,7 +57,7 @@ public class MyApplication extends MultiDexApplication implements Application
                 return;
             }
             LeakCanary.install(this);
-            Traceur.enableLogging();
+            //Traceur.enableLogging();
         } else {
             Fabric.with(this, new Crashlytics());
             Timber.plant(new CrashlyticsUtils.CrashlyticsTree());

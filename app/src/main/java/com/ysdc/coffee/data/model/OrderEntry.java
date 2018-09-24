@@ -1,22 +1,28 @@
 package com.ysdc.coffee.data.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.ysdc.coffee.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ysdc.coffee.utils.AppConstants.EMPTY_STRING;
+
 public class OrderEntry implements Parcelable {
-    private final Product product;
     private List<Ingredient> ingredients;
     private CupSize cupSize;
     private int quantity;
     private String note;
     private boolean takeaway;
     private Integer sugarQuantity;
+    private String coffeeName;
+    private String coffeeId;
+    private String coffeeImageUrl;
 
-    public OrderEntry(Product product) {
-        this.product = product;
+    public OrderEntry(){
         quantity = 1;
         cupSize = CupSize.MEDIUM;
         takeaway = false;
@@ -24,21 +30,16 @@ public class OrderEntry implements Parcelable {
         ingredients = new ArrayList<>();
     }
 
-    public OrderEntry(OrderedProduct orderedProduct, Product product) {
-        this.product = product;
-        this.quantity = orderedProduct.getQuantity();
-        this.cupSize = orderedProduct.getCupSize();
-        this.note = orderedProduct.getNote();
-        this.takeaway = orderedProduct.isTakeaway();
-        this.sugarQuantity = orderedProduct.getSugarQuantity();
-        ingredients = new ArrayList<>();
-        for (Ingredient ingredient : orderedProduct.getIngredients()) {
-            ingredients.add(ingredient);
-        }
+    public String getCoffeeName() {
+        return coffeeName;
     }
 
-    public Product getProduct() {
-        return product;
+    public String getCoffeeId() {
+        return coffeeId;
+    }
+
+    public String getCoffeeImageUrl() {
+        return coffeeImageUrl;
     }
 
     public List<Ingredient> getIngredients() {
@@ -89,6 +90,24 @@ public class OrderEntry implements Parcelable {
         this.sugarQuantity = sugarQuantity;
     }
 
+    public String getOrderDetails(Context context) {
+        return context.getString(cupSize.getLocalizableKey()) + ", " +
+                sugarQuantity + " " + context.getString(R.string.sugar_stick) + ", " +
+                getIngredients().size() + " " + context.getString(R.string.ingredients) + (takeaway ? ", " + context.getString(R.string.take_away) : EMPTY_STRING);
+    }
+
+    public void setCoffeeName(String coffeeName) {
+        this.coffeeName = coffeeName;
+    }
+
+    public void setCoffeeId(String coffeeId) {
+        this.coffeeId = coffeeId;
+    }
+
+    public void setCoffeeImageUrl(String coffeeImageUrl) {
+        this.coffeeImageUrl = coffeeImageUrl;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -96,28 +115,31 @@ public class OrderEntry implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.product, flags);
-        dest.writeList(this.ingredients);
+        dest.writeTypedList(this.ingredients);
         dest.writeInt(this.cupSize == null ? -1 : this.cupSize.ordinal());
         dest.writeInt(this.quantity);
         dest.writeString(this.note);
         dest.writeByte(this.takeaway ? (byte) 1 : (byte) 0);
         dest.writeValue(this.sugarQuantity);
+        dest.writeString(this.coffeeName);
+        dest.writeString(this.coffeeId);
+        dest.writeString(this.coffeeImageUrl);
     }
 
     protected OrderEntry(Parcel in) {
-        this.product = in.readParcelable(Product.class.getClassLoader());
-        this.ingredients = new ArrayList<Ingredient>();
-        in.readList(this.ingredients, Ingredient.class.getClassLoader());
+        this.ingredients = in.createTypedArrayList(Ingredient.CREATOR);
         int tmpCupSize = in.readInt();
         this.cupSize = tmpCupSize == -1 ? null : CupSize.values()[tmpCupSize];
         this.quantity = in.readInt();
         this.note = in.readString();
         this.takeaway = in.readByte() != 0;
         this.sugarQuantity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.coffeeName = in.readString();
+        this.coffeeId = in.readString();
+        this.coffeeImageUrl = in.readString();
     }
 
-    public static final Creator<OrderEntry> CREATOR = new Creator<OrderEntry>() {
+    public static final Parcelable.Creator<OrderEntry> CREATOR = new Parcelable.Creator<OrderEntry>() {
         @Override
         public OrderEntry createFromParcel(Parcel source) {
             return new OrderEntry(source);

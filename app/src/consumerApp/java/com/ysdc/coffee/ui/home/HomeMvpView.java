@@ -7,4 +7,6 @@ import com.ysdc.coffee.ui.base.MvpView;
  */
 
 public interface HomeMvpView extends MvpView {
+    void hideProgress();
+
 }

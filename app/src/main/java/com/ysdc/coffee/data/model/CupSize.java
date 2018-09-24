@@ -22,7 +22,7 @@ public enum CupSize {
     }
 
 
-    private CupSize(int value, @StringRes int key) {
+    CupSize(int value, @StringRes int key) {
         this.value = value;
         this.localizableKey = key;
     }

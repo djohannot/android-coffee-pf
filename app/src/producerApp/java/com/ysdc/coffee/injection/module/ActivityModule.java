@@ -43,7 +43,7 @@ public class ActivityModule {
     @Provides
     @ActivityScope
     HomeMvpPresenter<HomeMvpView> provideHomePresenter(ErrorHandler errorHandler, PushNotificationRepository pushNotificationRepository,
-                                                       ConfigurationRepository configurationRepository, MyPreferences preferences) {
-        return new HomePresenter<>(errorHandler, pushNotificationRepository, configurationRepository, preferences);
+                                                       ConfigurationRepository configurationRepository, MyPreferences preferences, ProductRepository productRepository) {
+        return new HomePresenter<>(errorHandler, pushNotificationRepository, configurationRepository, preferences, productRepository);
     }
 }

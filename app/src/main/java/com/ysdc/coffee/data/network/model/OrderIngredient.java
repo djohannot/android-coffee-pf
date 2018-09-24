@@ -5,17 +5,17 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrderIngredient {
     @SerializedName("id")
-    private String productId;
+    private String id;
     @SerializedName("quantity")
     private Integer quantity;
 
-    public OrderIngredient(String productId, Integer quantity) {
-        this.productId = productId;
+    public OrderIngredient(String id, Integer quantity) {
+        this.id = id;
         this.quantity = quantity;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getId() {
+        return id;
     }
 
     public Integer getQuantity() {

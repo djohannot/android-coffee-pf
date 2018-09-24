@@ -4,11 +4,7 @@ import com.ysdc.coffee.data.model.CupSize;
 import com.ysdc.coffee.data.model.Ingredient;
 import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.data.model.OrderEntry;
-import com.ysdc.coffee.data.model.OrderProducts;
-import com.ysdc.coffee.data.model.OrderedProduct;
-import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.data.model.User;
-import com.ysdc.coffee.data.model.UserOrder;
 import com.ysdc.coffee.data.network.model.Item;
 import com.ysdc.coffee.data.network.model.NetworkOrder;
 import com.ysdc.coffee.data.network.model.OrderIngredient;
@@ -25,16 +21,18 @@ import timber.log.Timber;
 public class OrderMapper {
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private final SimpleDateFormat simpleDateFormat;
+    private final ProductRepository productRepository;
 
-    public OrderMapper() {
+    public OrderMapper(ProductRepository productRepository) {
         simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        this.productRepository = productRepository;
     }
 
     public OrderRequest convertOrder(Order order) {
         OrderRequest orderRequest = new OrderRequest();
-        for (OrderEntry orderEntry : order.getOrderedProductList()) {
+        for (OrderEntry orderEntry : order.getEntries()) {
             Item item = new Item();
-            item.setId(orderEntry.getProduct().getId());
+            item.setId(orderEntry.getCoffeeId());
             item.setQuantity(orderEntry.getQuantity());
             item.setNote(orderEntry.getNote());
             item.setTakeaway(orderEntry.isTakeaway());
@@ -49,8 +47,8 @@ public class OrderMapper {
         return orderRequest;
     }
 
-    public List<OrderedProduct> parseNetworkOrders(List<NetworkOrder> networkOrders) {
-        List<OrderedProduct> orders = new ArrayList<>();
+    public List<Order> convertNetworkOrder(List<NetworkOrder> networkOrders) {
+        List<Order> orders = new ArrayList<>();
 
         for (NetworkOrder networkOrder : networkOrders) {
             Order order = new Order();
@@ -60,38 +58,18 @@ public class OrderMapper {
             try {
                 order.setDate(simpleDateFormat.parse(networkOrder.getDate().split("\\.")[0]));
             } catch (ParseException e) {
-                Timber.e(e,"oups");
+                Timber.e(e, "Date parsing exception");
             }
             for (Item item : networkOrder.getItems()) {
-                orders.add(parseItem(item, order));
-            }
-        }
-        return orders;
-    }
-
-    public List<UserOrder> parseAllUsersOrders(List<NetworkOrder> networkOrders) {
-        List<UserOrder> orders = new ArrayList<>();
-
-        for (NetworkOrder networkOrder : networkOrders) {
-            UserOrder order = new UserOrder();
-            order.setId(networkOrder.getId());
-            order.setStatus(networkOrder.getOrderStatus());
-            order.setUser(new User(networkOrder.getUserName(), networkOrder.getImageUrl()));
-            try {
-                order.setDate(simpleDateFormat.parse(networkOrder.getDate().split("\\.")[0]));
-            } catch (ParseException e) {
-                Timber.e(e,"oups");
-            }
-            for (Item item : networkOrder.getItems()) {
-                order.getOrderedProductList().add(parseItem(item));
+                order.getEntries().add(parseItem(item));
             }
             orders.add(order);
         }
         return orders;
     }
 
-    private OrderProducts parseItem(Item item) {
-        OrderProducts entry = new OrderProducts();
+    private OrderEntry parseItem(Item item) {
+        OrderEntry entry = new OrderEntry();
         entry.setCupSize(CupSize.fromId(item.getSize()));
         entry.setQuantity(item.getQuantity());
         entry.setSugarQuantity(item.getSugarQuantity());
@@ -103,28 +81,9 @@ public class OrderMapper {
         entry.setNote(item.getNote());
         if (item.hasIngredients()) {
             for (OrderIngredient ingredient : item.getIngredients()) {
-                entry.getIngredients().add(Ingredient.fromId(ingredient.getProductId()));
+                entry.getIngredients().add(productRepository.getIngredientForId(ingredient.getId()));
             }
         }
         return entry;
-    }
-
-    private OrderedProduct parseItem(Item item, Order order) {
-        OrderedProduct orderedProduct = new OrderedProduct(order);
-        orderedProduct.setCupSize(CupSize.fromId(item.getSize()));
-        orderedProduct.setQuantity(item.getQuantity());
-        orderedProduct.setSugarQuantity(item.getSugarQuantity());
-        orderedProduct.setTakeaway(item.isTakeaway());
-        orderedProduct.setCoffeeName(item.getCoffeeName());
-        orderedProduct.setCoffeeImageUrl(item.getCoffeeImage());
-        orderedProduct.setCoffeeId(item.getCoffeeId());
-        orderedProduct.setCoffeeImageUrl(item.getCoffeeImage());
-        orderedProduct.setNote(item.getNote());
-        if (item.hasIngredients()) {
-            for (OrderIngredient ingredient : item.getIngredients()) {
-                orderedProduct.getIngredients().add(Ingredient.fromId(ingredient.getProductId()));
-            }
-        }
-        return orderedProduct;
     }
 }

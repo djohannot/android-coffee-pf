@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -25,13 +26,14 @@ public class MyPreferences {
     public static final String USER_MAIL = "USER_MAIL";
     public static final String USER_NAME = "USER_NAME";
     public static final String USER_PICTURE = "USER_PICTURE";
-    public static final String BAR_OPEN = "BAR_OPEN";
     //Push notification
     public static final String PUSH_TOKEN = "PUSH_TOKEN";
     public static final String PUSH_TOKEN_STORED = "PUSH_TOKEN_STORED";
-    //Device ID, used by backend to identify a phone (related to push)
-    public static final String DEVICE_ID = "DEVICE_ID";
-
+    //Settings
+    public static final String BAR_OPEN = "BAR_OPEN";
+    //Configurations
+    public static final String INGREDIENTS = "INGREDIENTS";
+    public static final String DESTINATIONS = "DESTINATIONS";
 
     private final SharedPreferences sharedPrefs;
     private final Gson gson;

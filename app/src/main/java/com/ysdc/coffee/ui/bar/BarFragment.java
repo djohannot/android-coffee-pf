@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,13 +26,15 @@ public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplay
     private Integer menuId;
 
     @BindView(R.id.bar_status_img)
-    ImageView barImg;
+    protected ImageView barImg;
     @BindView(R.id.layout_close)
     protected RelativeLayout closeLayout;
     @BindView(R.id.layout_open)
     protected RelativeLayout openLayout;
     @BindView(R.id.status_queue)
     protected TextView statusQueue;
+    @BindView(R.id.progress)
+    protected ProgressBar progressBar;
 
     @Inject
     BarMvpPresenter<BarMvpView> presenter;
@@ -92,11 +96,13 @@ public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplay
     }
 
     public void updateContent() {
+        showProgress();
         presenter.updateContent();
     }
 
     @Override
     public void updateBar(boolean barOpen) {
+        hideProgress();
         if (barOpen) {
             barImg.setImageDrawable(getResources().getDrawable(R.drawable.illustration_opened));
             openLayout.setVisibility(View.VISIBLE);
@@ -105,6 +111,21 @@ public class BarFragment extends BaseFragment implements BarMvpView, MenuDisplay
             barImg.setImageDrawable(getResources().getDrawable(R.drawable.illustration_closed));
             openLayout.setVisibility(View.GONE);
             closeLayout.setVisibility(View.VISIBLE);
+        }
+        barImg.setVisibility(View.VISIBLE);
+    }
+
+    private void showProgress() {
+        if (progressBar.getVisibility() == View.GONE) {
+            progressBar.setVisibility(View.VISIBLE);
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+    }
+
+    private void hideProgress() {
+        if (progressBar.getVisibility() == View.VISIBLE) {
+            progressBar.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }
 }

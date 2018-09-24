@@ -1,5 +1,7 @@
 package com.ysdc.coffee.data.network.service;
 
+import com.ysdc.coffee.data.model.Destination;
+import com.ysdc.coffee.data.model.Ingredient;
 import com.ysdc.coffee.data.network.model.Configuration;
 import com.ysdc.coffee.data.network.model.NetworkOrder;
 import com.ysdc.coffee.data.network.model.OrderRequest;
@@ -27,6 +29,8 @@ public interface CoffeeService {
     String ENDPOINT_ORDER = "order";
     String ENDPOINT_PUSH = "subscribe";
     String ENDPOINT_SETTINGS = "settings";
+    String ENDPOINT_INGREDIENT = "ingredient";
+    String ENDPOINT_DESTINATION = "destination";
     String ENDPOINT_ORDER_STATUS = ENDPOINT_ORDER + "/{" + PARAMETER_ORDER_ID + "}";
 
     @Headers(HEADER_JSON)
@@ -40,10 +44,6 @@ public interface CoffeeService {
     @Headers(HEADER_JSON)
     @PATCH(ENDPOINT_ORDER_STATUS)
     Single<NetworkOrder> updateOrder(@Path(PARAMETER_ORDER_ID) String orderId, @Body UpdateOrder updateOrder);
-
-    @Headers(HEADER_JSON)
-    @PATCH(ENDPOINT_ORDER_STATUS)
-    Single<List<NetworkOrder>> getOrderStatus(@Path(PARAMETER_ORDER_ID) String orderId);
 
     @Headers(HEADER_JSON)
     @POST(ENDPOINT_PUSH)
@@ -60,4 +60,13 @@ public interface CoffeeService {
     @Headers(HEADER_JSON)
     @PATCH(ENDPOINT_SETTINGS)
     Single<Configuration> updateSettings(@Body Configuration configuration);
+
+    @Headers(HEADER_JSON)
+    @GET(ENDPOINT_INGREDIENT)
+    Single<List<Ingredient>> getIngredients();
+
+    @Headers(HEADER_JSON)
+    @GET(ENDPOINT_DESTINATION)
+    Single<List<Destination>> getDestinations();
+
 }

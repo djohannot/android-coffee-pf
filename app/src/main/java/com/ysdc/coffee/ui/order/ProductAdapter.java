@@ -50,11 +50,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void updateProductsQuantities(List<OrderEntry> orders) {
         productsQuantity = new HashMap<>();
         for (OrderEntry order : orders) {
-            Integer quantity = productsQuantity.get(order.getProduct().getId());
+            Integer quantity = productsQuantity.get(order.getCoffeeId());
             if (quantity != null) {
-                productsQuantity.put(order.getProduct().getId(), quantity + INCREMENT);
+                productsQuantity.put(order.getCoffeeId(), quantity + INCREMENT);
             } else {
-                productsQuantity.put(order.getProduct().getId(), order.getQuantity());
+                productsQuantity.put(order.getCoffeeId(), order.getQuantity());
             }
         }
     }

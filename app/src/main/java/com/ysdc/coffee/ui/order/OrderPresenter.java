@@ -3,7 +3,6 @@ package com.ysdc.coffee.ui.order;
 import com.ysdc.coffee.data.ErrorHandler;
 import com.ysdc.coffee.data.model.Order;
 import com.ysdc.coffee.data.model.OrderEntry;
-import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.data.repository.OrderRepository;
 import com.ysdc.coffee.data.repository.ProductRepository;
@@ -42,17 +41,22 @@ public class OrderPresenter<V extends OrderMvpView> extends BasePresenter<V> imp
         if (order == null) {
             return new ArrayList<>();
         }
-        return order.getOrderedProductList();
+        return order.getEntries();
     }
 
     @Override
-    public OrderEntry getOrderEntriesForProduct(Product product){
-        for(OrderEntry orderedProduct : getOrderEntries()){
-            if(orderedProduct.getProduct().getId().equalsIgnoreCase(product.getId())){
-                return orderedProduct;
+    public OrderEntry getOrderEntriesForProduct(Product product) {
+        for (OrderEntry orderEntry : getOrderEntries()) {
+            if (orderEntry.getCoffeeId().equalsIgnoreCase(product.getId())) {
+                return orderEntry;
             }
         }
-        return new OrderEntry(product);
+        OrderEntry entry = new OrderEntry();
+        entry.setCoffeeId(product.getId());
+        entry.setCoffeeName(product.getName());
+        entry.setCoffeeImageUrl(product.getImageUrl());
+
+        return entry;
     }
 
     @Override

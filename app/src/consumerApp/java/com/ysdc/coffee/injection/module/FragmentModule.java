@@ -53,8 +53,8 @@ public class FragmentModule {
 
     @Provides
     @FragmentScope
-    BarMvpPresenter<BarMvpView> provideBarPresenter(ErrorHandler errorHandler, ConfigurationRepository configurationRepository, MyPreferences preferences) {
-        return new BarPresenter<>(errorHandler, configurationRepository, preferences);
+    BarMvpPresenter<BarMvpView> provideBarPresenter(ErrorHandler errorHandler, ConfigurationRepository configurationRepository) {
+        return new BarPresenter<>(errorHandler, configurationRepository);
     }
 
     @Provides
@@ -71,7 +71,7 @@ public class FragmentModule {
 
     @Provides
     @FragmentScope
-    CreateOrderMvpPresenter<CreateOrderMvpView> provideCreateOrderPresenter(ErrorHandler errorHandler, OrderRepository orderRepository) {
-        return new CreateOrderPresenter<>(errorHandler, orderRepository);
+    CreateOrderMvpPresenter<CreateOrderMvpView> provideCreateOrderPresenter(ErrorHandler errorHandler, OrderRepository orderRepository, ProductRepository productRepository) {
+        return new CreateOrderPresenter<>(errorHandler, orderRepository, productRepository);
     }
 }

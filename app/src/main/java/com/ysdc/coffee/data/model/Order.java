@@ -3,16 +3,17 @@ package com.ysdc.coffee.data.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Order {
     private String id;
     private User user;
     private Date date;
     private OrderStatus status;
-    private List<OrderEntry> orderedProductList;
+    private List<OrderEntry> entries;
 
     public Order(){
-        orderedProductList = new ArrayList<>();
+        entries = new ArrayList<>();
     }
 
     public String getId() {
@@ -47,15 +48,15 @@ public class Order {
         this.status = status;
     }
 
-    public void setOrderEntryList(List<OrderEntry> orderedProductList) {
-        this.orderedProductList = orderedProductList;
-    }
-
     public void addEntry(OrderEntry entry) {
-        orderedProductList.add(entry);
+        entries.add(entry);
     }
 
-    public List<OrderEntry> getOrderedProductList() {
-        return orderedProductList;
+    public void removeEntry(OrderEntry entry){
+        entries.remove(entry);
+    }
+
+    public List<OrderEntry> getEntries() {
+        return entries;
     }
 }

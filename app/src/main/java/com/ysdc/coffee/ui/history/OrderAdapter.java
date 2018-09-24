@@ -9,16 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.ysdc.coffee.R;
-import com.ysdc.coffee.data.model.OrderedProduct;
+import com.ysdc.coffee.data.model.Order;
+import com.ysdc.coffee.data.model.OrderEntry;
 import com.ysdc.coffee.injection.module.GlideApp;
 
 import org.ocpsoft.prettytime.PrettyTime;
+import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 import java.util.Date;
@@ -31,21 +34,22 @@ import static com.ysdc.coffee.data.model.OrderStatus.READY;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
-    private List<OrderedProduct> orders;
+    private static final String EXTRA_SPACE = "  ";
+    private List<Order> orders;
     private final OnOrdersClickListener listener;
     private final Context context;
 
     interface OnOrdersClickListener {
-        void onOrderClicked(OrderedProduct orderedProduct);
+        void onOrderClicked(Order orderedProduct);
     }
 
-    public OrderAdapter(List<OrderedProduct> orders, OnOrdersClickListener listener, Context context) {
+    public OrderAdapter(List<Order> orders, OnOrdersClickListener listener, Context context) {
         this.orders = orders;
         this.listener = listener;
         this.context = context;
     }
 
-    public void updateOrders(List<OrderedProduct> orders) {
+    public void updateOrders(List<Order> orders) {
         this.orders = orders;
     }
 
@@ -58,43 +62,53 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        OrderedProduct orderedProduct = orders.get(position);
+        Order order = orders.get(position);
 
-        if (!TextUtils.isEmpty(orderedProduct.getCoffeeImageUrl())) {
-            holder.updatePicture(orderedProduct.getCoffeeImageUrl());
-        }
-
-        holder.productName.setText(orderedProduct.getCoffeeName());
-        holder.quantityField.setText(String.valueOf(orderedProduct.getQuantity()));
-        holder.orderDetails.setText(orderedProduct.getOrderDetails(context));
-        switch (orderedProduct.getOrder().getStatus()) {
+        PrettyTime timeFormatter = new PrettyTime(new Date());
+        holder.date.setText(timeFormatter.format(order.getDate()));
+        switch (order.getStatus()) {
             case DONE:
                 holder.orderStatus.setVisibility(View.GONE);
                 break;
             case READY:
                 holder.orderStatus.setVisibility(View.VISIBLE);
-                holder.orderStatus.setText("  " + context.getString(READY.getLocalizableKey()) + "  ");
+                holder.orderStatus.setText(EXTRA_SPACE + context.getString(READY.getLocalizableKey()) + EXTRA_SPACE);
                 holder.orderStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_round_corner_status_ready));
                 break;
             case CANCELED:
                 holder.orderStatus.setVisibility(View.VISIBLE);
-                holder.orderStatus.setText("  " + context.getString(CANCELED.getLocalizableKey()) + "  ");
+                holder.orderStatus.setText(EXTRA_SPACE + context.getString(CANCELED.getLocalizableKey()) + EXTRA_SPACE);
                 holder.orderStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_round_corner_status_canceled));
                 break;
             case PENDING:
                 holder.orderStatus.setVisibility(View.VISIBLE);
-                holder.orderStatus.setText("  " + context.getString(PENDING.getLocalizableKey()) + "  ");
+                holder.orderStatus.setText(EXTRA_SPACE + context.getString(PENDING.getLocalizableKey()) + EXTRA_SPACE);
                 holder.orderStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_round_corner_status_pending));
                 break;
             case IN_PROGRESS:
                 holder.orderStatus.setVisibility(View.VISIBLE);
-                holder.orderStatus.setText("  " + context.getString(IN_PROGRESS.getLocalizableKey()) + "  ");
+                holder.orderStatus.setText(EXTRA_SPACE + context.getString(IN_PROGRESS.getLocalizableKey()) + EXTRA_SPACE);
                 holder.orderStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_round_corner_status_pending));
             default:
                 break;
         }
-        PrettyTime timeFormatter = new PrettyTime(new Date());
-        holder.date.setText(timeFormatter.format(orderedProduct.getOrder().getDate()));
+        holder.content.removeAllViews();
+        for(OrderEntry entry : order.getEntries()){
+            final View extend = LayoutInflater.from(holder.context).inflate(R.layout.cell_order_entry, holder.content, false);
+
+            if (!TextUtils.isEmpty(entry.getCoffeeImageUrl())) {
+                ImageView productImage = extend.findViewById(R.id.product_image);
+                holder.updatePicture(entry.getCoffeeImageUrl(), productImage);
+            }
+            TextView productTitle = extend.findViewById(R.id.product_title);
+            productTitle.setText(entry.getCoffeeName());
+            TextView productDetails = extend.findViewById(R.id.product_details);
+            productDetails.setText(entry.getOrderDetails(holder.context));
+            TextView quantityField = extend.findViewById(R.id.quantity_field);
+            quantityField.setText(String.valueOf(entry.getQuantity()));
+
+            holder.content.addView(extend);
+        }
     }
 
     @Override
@@ -104,12 +118,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView productImage;
-        private final TextView productName;
-        private final TextView orderDetails;
         private final TextView orderStatus;
-        private final TextView quantityField;
         private final TextView date;
+        private final LinearLayout content;
         private final Context context;
 
         private WeakReference<OnOrdersClickListener> listenerRef;
@@ -121,23 +132,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             listenerRef = new WeakReference<>(listener);
 
             v.findViewById(R.id.cell_layout).setOnClickListener(v1 -> listenerRef.get().onOrderClicked(orders.get(getAdapterPosition())));
-            productImage = v.findViewById(R.id.product_image);
-            productName = v.findViewById(R.id.product_title);
-            orderDetails = v.findViewById(R.id.order_details);
             orderStatus = v.findViewById(R.id.order_status);
-            quantityField = v.findViewById(R.id.quantity_field);
+            content = v.findViewById(R.id.content);
             date = v.findViewById(R.id.order_date);
         }
 
-        protected void updatePicture(String image) {
+        protected void updatePicture(String image, ImageView view) {
             GlideApp.with(context)
                     .load(image)
+                    //TODO: add placeholder to all image loaded with Glide
                     //.load(TextUtils.isEmpty(product.getImageUrl()) ? R.drawable.ic_profile_placeholder : product.getImageUrl())
                     .apply(new RequestOptions().circleCropTransform())
                     .fitCenter()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(productImage);
+                    .into(view);
         }
     }
 }

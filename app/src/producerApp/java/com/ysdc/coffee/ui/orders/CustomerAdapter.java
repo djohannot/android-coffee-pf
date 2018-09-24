@@ -92,8 +92,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
 
         private final ImageView customerImage;
         private final TextView customerName;
-        private final TextView date;
         private final TextView orderStatus;
+        private final TextView date;
         private final LinearLayout content;
         private final Context context;
 

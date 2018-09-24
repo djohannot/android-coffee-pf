@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cell_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="@dimen/product_image_size"
+        android:layout_height="@dimen/product_image_size"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:id="@+id/product_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/product_image"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/dark"
+        android:textSize="@dimen/product_cell_title_font"
+        tools:text="Expresso" />
+
+    <TextView
+        android:id="@+id/product_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product_title"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/product_image"
+        android:fontFamily="sans-serif"
+        android:maxLines="2"
+        android:textColor="@color/dark"
+        android:textSize="14sp"
+        tools:text="details" />
+
+    <LinearLayout
+        android:id="@+id/quantity_layout"
+        android:layout_width="47dp"
+        android:layout_height="24dp"
+        android:layout_alignTop="@id/product_title"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/product_title"
+        android:background="@drawable/shape_round_corner_quantity"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/empty">
+
+        <TextView
+            android:id="@+id/quantity_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/quantityTextColor"
+            tools:text="2" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.ysdc.coffee.injection.module;
 
+import com.google.gson.Gson;
 import com.ysdc.coffee.data.network.DefaultNetworkServiceCreator;
 import com.ysdc.coffee.data.prefs.MyPreferences;
 import com.ysdc.coffee.data.repository.ConfigurationRepository;
@@ -29,27 +30,26 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    ProductRepository provideProductRepository(DefaultNetworkServiceCreator networkServiceCreator) {
-        return new ProductRepository(networkServiceCreator);
+    ProductRepository provideProductRepository(DefaultNetworkServiceCreator networkServiceCreator, MyPreferences preferences, Gson gson) {
+        return new ProductRepository(preferences, networkServiceCreator, gson);
     }
 
     @Provides
     @Singleton
-    UserRepository provideUserRepository(MyPreferences preferences, DefaultNetworkServiceCreator networkServiceCreator) {
-        return new UserRepository(preferences, networkServiceCreator);
+    UserRepository provideUserRepository(MyPreferences preferences) {
+        return new UserRepository(preferences);
     }
 
     @Provides
     @Singleton
-    ConfigurationRepository provideConfigurationRepository(MyPreferences preferences, DefaultNetworkServiceCreator networkServiceCreator) {
-        return new ConfigurationRepository(preferences, networkServiceCreator);
+    ConfigurationRepository provideConfigurationRepository(MyPreferences preferences, DefaultNetworkServiceCreator networkServiceCreator, Gson gson) {
+        return new ConfigurationRepository(preferences, networkServiceCreator, gson);
     }
 
     @Provides
     @Singleton
-    PushNotificationRepository providePushNotificationRepositoryRepository(MyPreferences preferences, DefaultNetworkServiceCreator networkServiceCreator,
-                                                                           ConfigurationRepository configurationRepository) {
-        return new PushNotificationRepository(preferences, networkServiceCreator, configurationRepository);
+    PushNotificationRepository providePushNotificationRepositoryRepository(MyPreferences preferences, DefaultNetworkServiceCreator networkServiceCreator) {
+        return new PushNotificationRepository(preferences, networkServiceCreator);
     }
 
 }

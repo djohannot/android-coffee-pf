@@ -1,12 +1,12 @@
 package com.ysdc.coffee.ui.create;
 
-import android.os.Parcelable;
-
 import com.ysdc.coffee.data.model.CupSize;
+import com.ysdc.coffee.data.model.Ingredient;
 import com.ysdc.coffee.data.model.OrderEntry;
-import com.ysdc.coffee.data.model.OrderedProduct;
 import com.ysdc.coffee.data.model.Product;
 import com.ysdc.coffee.ui.base.MvpPresenter;
+
+import java.util.List;
 
 import io.reactivex.Completable;
 
@@ -14,25 +14,23 @@ public interface CreateOrderMvpPresenter<V extends CreateOrderMvpView> extends M
 
     OrderEntry getOrderEntry();
 
-    Product getProduct();
-
     void incrementQuantity();
 
     void decrementQuantity();
 
-    void setSizeSelected(CupSize large);
+    void setSizeSelected(CupSize cupSize);
 
     void setSugarSelected(int quantity);
 
-    void carmelSelected(boolean b);
-
-    void toffeenutSelected(boolean b);
-
-    void vanillaSelected(boolean b);
+    void ingredientModified(String ingredientId, boolean selected);
 
     void isTakeAway(boolean b);
 
     Completable addOrder();
 
     void setOrderEntry(OrderEntry entry);
+
+    List<Ingredient> getIngredients();
+
+    boolean getSwitchValueForIngredient(Ingredient ingredient);
 }
