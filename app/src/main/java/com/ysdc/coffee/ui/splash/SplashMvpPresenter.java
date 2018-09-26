@@ -14,5 +14,7 @@ public interface SplashMvpPresenter<V extends SplashMvpView> extends MvpPresente
 
     Completable analyzeGoogleSignIn(Task<GoogleSignInAccount> completedTask);
 
+    Completable loadContent();
+
     boolean isUserLoggedIn();
 }

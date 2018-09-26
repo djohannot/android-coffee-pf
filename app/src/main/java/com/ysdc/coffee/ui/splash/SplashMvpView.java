@@ -7,5 +7,4 @@ import com.ysdc.coffee.ui.base.MvpView;
  */
 
 public interface SplashMvpView extends MvpView {
-
 }

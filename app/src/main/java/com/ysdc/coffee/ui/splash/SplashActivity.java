@@ -3,7 +3,10 @@ package com.ysdc.coffee.ui.splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -22,7 +25,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class SplashActivity extends BaseActivity implements SplashMvpView {
@@ -35,11 +40,13 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     @Inject
     SplashMvpPresenter<SplashMvpView> presenter;
     @BindView(R.id.main_container)
-    protected LinearLayout mainContainer;
+    protected RelativeLayout mainContainer;
     @BindView(R.id.sign_in_google)
     protected SignInButton signInButton;
     @BindView(R.id.sign_in_desc)
     protected TextView signInDesc;
+    @BindView(R.id.progress)
+    protected ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +58,6 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         setUnBinder(ButterKnife.bind(this));
 
         presenter.onAttach(SplashActivity.this);
-
-        setUp();
     }
 
     @Override
@@ -71,6 +76,8 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     protected void onResume() {
         super.onResume();
         this.subscriptions = new CompositeDisposable();
+
+        setUp();
     }
 
 
@@ -84,6 +91,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
                 subscriptions.add(
                         presenter.analyzeGoogleSignIn(task).subscribe(() -> {
                             Timber.d("analyzeGoogleSignIn done");
+                            hideLogin();
                             showNextActivity();
                         }, throwable -> {
                             if (throwable instanceof WrongEmailException) {
@@ -107,11 +115,6 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     }
 
     private void setUp() {
-//        subscriptions.add(Single.timer(1000, TimeUnit.MILLISECONDS)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(value -> {
-//                }));
-
         if (presenter.isUserLoggedIn()) {
             showNextActivity();
         } else {
@@ -125,8 +128,17 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     }
 
     private void showNextActivity() {
-        startActivity(HomeActivity.getInstance(this));
-        finish();
+        subscriptions.add(
+                presenter.loadContent()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(disposable -> showProgress())
+                        .doFinally(() -> hideProgress())
+                        .subscribe(() -> {
+                            startActivity(HomeActivity.getInstance(this));
+                            finish();
+                        }, throwable -> onError(throwable))
+        );
     }
 
     private void showLogin() {
@@ -142,5 +154,19 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     private void showError() {
         signInDesc.setText(getString(R.string.login_error));
         signInDesc.setTextColor(getResources().getColor(R.color.selection));
+    }
+
+    private void hideProgress() {
+        if (progressBar.getVisibility() == View.VISIBLE) {
+            progressBar.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+    }
+
+    private void showProgress() {
+        if (progressBar.getVisibility() == View.GONE) {
+            progressBar.setVisibility(View.VISIBLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
     }
 }

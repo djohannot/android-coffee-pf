@@ -37,13 +37,13 @@ public class ActivityModule {
 
     @Provides
     @ActivityScope
-    SplashMvpPresenter<SplashMvpView> provideSplashPresenter(ErrorHandler errorHandler, UserRepository userRepository) {
-        return new SplashPresenter<>(errorHandler, userRepository);
+    SplashMvpPresenter<SplashMvpView> provideSplashPresenter(ErrorHandler errorHandler, UserRepository userRepository, PushNotificationRepository pushNotificationRepository,
+                                                             ConfigurationRepository configurationRepository, ProductRepository productRepository) {
+        return new SplashPresenter<>(errorHandler, userRepository, pushNotificationRepository, configurationRepository, productRepository);
     }
     @Provides
     @ActivityScope
-    HomeMvpPresenter<HomeMvpView> provideHomePresenter(ErrorHandler errorHandler, PushNotificationRepository pushNotificationRepository,
-                                                       ConfigurationRepository configurationRepository, ProductRepository productRepository) {
-        return new HomePresenter<>(errorHandler, pushNotificationRepository, configurationRepository, productRepository);
+    HomeMvpPresenter<HomeMvpView> provideHomePresenter(ErrorHandler errorHandler) {
+        return new HomePresenter<>(errorHandler);
     }
 }

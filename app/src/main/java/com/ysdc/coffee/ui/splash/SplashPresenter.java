@@ -4,12 +4,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.ysdc.coffee.data.ErrorHandler;
+import com.ysdc.coffee.data.repository.ConfigurationRepository;
+import com.ysdc.coffee.data.repository.ProductRepository;
+import com.ysdc.coffee.data.repository.PushNotificationRepository;
 import com.ysdc.coffee.data.repository.UserRepository;
 import com.ysdc.coffee.exception.GoogleException;
 import com.ysdc.coffee.exception.WrongEmailException;
 import com.ysdc.coffee.ui.base.BasePresenter;
 
 import io.reactivex.Completable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 import static com.ysdc.coffee.utils.AppConstants.PROPERTY_FINDER_EMAIL;
@@ -21,10 +25,17 @@ import static com.ysdc.coffee.utils.AppConstants.PROPERTY_FINDER_EMAIL;
 public class SplashPresenter<V extends SplashMvpView> extends BasePresenter<V> implements SplashMvpPresenter<V> {
 
     private final UserRepository userRepository;
+    private final PushNotificationRepository pushNotificationRepository;
+    private final ConfigurationRepository configurationRepository;
+    private final ProductRepository productRepository;
 
-    public SplashPresenter(ErrorHandler errorHandler, UserRepository userRepository) {
+    public SplashPresenter(ErrorHandler errorHandler, UserRepository userRepository, PushNotificationRepository pushNotificationRepository,
+                           ConfigurationRepository configurationRepository, ProductRepository productRepository) {
         super(errorHandler);
         this.userRepository = userRepository;
+        this.configurationRepository = configurationRepository;
+        this.pushNotificationRepository = pushNotificationRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -51,6 +62,15 @@ public class SplashPresenter<V extends SplashMvpView> extends BasePresenter<V> i
                 return Completable.error(new GoogleException());
             }
         });
+    }
+
+    @Override
+    public Completable loadContent() {
+        return pushNotificationRepository.registerPushTokenOnBackend()
+                .andThen(configurationRepository.refreshConfiguration())
+                .andThen(configurationRepository.retrieveDestinations())
+                .andThen(productRepository.retrieveIngredients())
+                .subscribeOn(Schedulers.io());
     }
 
     @Override

@@ -13,26 +13,8 @@ import com.ysdc.coffee.ui.base.BasePresenter;
 
 public class HomePresenter<V extends HomeMvpView> extends BasePresenter<V> implements HomeMvpPresenter<V> {
 
-    private final PushNotificationRepository pushNotificationRepository;
-    private final ConfigurationRepository configurationRepository;
-    private final ProductRepository productRepository;
 
-    public HomePresenter(ErrorHandler errorHandler, PushNotificationRepository pushNotificationRepository, ConfigurationRepository configurationRepository,
-                         ProductRepository productRepository) {
+    public HomePresenter(ErrorHandler errorHandler) {
         super(errorHandler);
-        this.configurationRepository = configurationRepository;
-        this.pushNotificationRepository = pushNotificationRepository;
-        this.productRepository = productRepository;
-        updateContent();
-    }
-
-    private void updateContent() {
-        getCompositeDisposable().add(pushNotificationRepository.registerPushTokenOnBackend()
-                .andThen(configurationRepository.refreshConfiguration())
-                .andThen(configurationRepository.retrieveDestinations())
-                .andThen(productRepository.retrieveIngredients())
-                .onErrorComplete()
-                .doFinally(() -> getMvpView().hideProgress())
-                .subscribe());
     }
 }

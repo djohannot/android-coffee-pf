@@ -13,9 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -49,10 +47,6 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
     protected NoSwipePager viewPager;
     @BindView(R.id.fragmentContainer)
     protected FrameLayout fragmentContainer;
-    @BindView(R.id.progress)
-    protected ProgressBar progressBar;
-    //    @BindView(R.id.barLayout)
-//    AppBarLayout barLayout;
     @Inject
     HomeMvpPresenter<HomeMvpView> presenter;
     private FragmentAdapter adapter;
@@ -170,7 +164,6 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
     }
 
     private void initializeView() {
-        showProgress();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
 
@@ -309,21 +302,6 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, AHBottomN
             if (fragment != null) {
                 getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
-        }
-    }
-
-    @Override
-    public void hideProgress() {
-        if (progressBar.getVisibility() == View.VISIBLE) {
-            progressBar.setVisibility(View.GONE);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        }
-    }
-
-    private void showProgress() {
-        if (progressBar.getVisibility() == View.GONE) {
-            progressBar.setVisibility(View.VISIBLE);
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }
 }
